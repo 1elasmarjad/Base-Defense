@@ -5,6 +5,7 @@ Description :   Defend your home base from unwanted enemy boats, ships, warships
 """
 
 from Player import Inventory
+from Player import Player
 import pygame
 
 # CONSTANTS
@@ -22,9 +23,9 @@ pygame.init()
 pygame.display.set_caption("Base Defense")
 running = True
 
-test = Inventory.Inventory(3)
+test = Player.Player(5,5)
 
-print(test.size())
+
 
 
 # def __checkForClose():
