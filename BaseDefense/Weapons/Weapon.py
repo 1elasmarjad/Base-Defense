@@ -1,9 +1,23 @@
+"""
+WEAPONS
+
+damage = the damage a weapon does (optimally)
+damage drop off = the drop off to -damage per pixel
+rate of fire = the speed in which a given weapon can attack
+ammo cap = the capacity of how much ammo a given weapon can hold
+ammo = the ammo a given weapon has
+
+#todo
+    - add a reload
+    - add more weapons
+"""
+
+
 class Weapon:
-    def __init__(self, name, damage, damage_drop_off, reload_time, rate_of_fire, ammo_cap, ammo):
+    def __init__(self, name, damage, damage_drop_off, rate_of_fire, ammo_cap, ammo):
         self.name = name
         self.damage = damage
         self.damage_drop_off = damage_drop_off
-        self.reload_time = reload_time
         self.rate_of_fire = rate_of_fire
         self.ammo_cap = ammo_cap
         self.ammo = ammo
@@ -11,7 +25,7 @@ class Weapon:
     def reload(self):
         print("TODO")  # TODO
 
-    def fire(self, x, y):
+    def fire(self, xFrom, yFrom, xTo, yTo):
         print("TODO")  # TODO
 
     def giveAmmo(self, amount):
@@ -22,3 +36,12 @@ class Weapon:
             return True  # able to give ammo
 
 
+class Water_Gun(Weapon):
+    pass
+    __NAME = "Water Gun"
+    __DAMAGE = 15
+    __DAMAGE_DROP_OFF = 0.002
+
+    def __init__(self, ammo_given):
+        super().__init__(Water_Gun.__NAME, Water_Gun.__DAMAGE, Water_Gun.__DAMAGE_DROP_OFF, Water_Gun.__RATE_OF_FIRE,
+                         Water_Gun.__AMMO_CAP, ammo_given)

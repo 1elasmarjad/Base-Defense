@@ -3,76 +3,89 @@ import pygame
 
 
 class Player:
-    _DEFAULT_COINS = 1000
-    _DEFAULT_INVENTORY_SIZE = 2
-    _DEFAULT_HEALTH = 130
-    _DEFAULT_ARMOR = 20
-    _HEAL_DELAY = 50
+    __DEFAULT_COINS = 1000
+    __DEFAULT_INVENTORY_SIZE = 2
+    __DEFAULT_HEALTH = 130
+    __DEFAULT_ARMOR = 20
+    __HEAL_DELAY = 50
+    __MOVEMENT_FACTOR = 4
 
     def __init__(self, x, y):
-        self._x = x
-        self._y = y
-        self._coins = Player._DEFAULT_COINS
-        self._alive = True
-        self.inventory = Inventory.Inventory(Player._DEFAULT_INVENTORY_SIZE)
-        self._health = Player._DEFAULT_HEALTH
-        self._armor = Player._DEFAULT_ARMOR
+        self.__x = x
+        self.__y = y
+        self.__coins = Player.__DEFAULT_COINS
+        self.__alive = True
+        self.inventory = Inventory.Inventory(Player.__DEFAULT_INVENTORY_SIZE)
+        self.__health = Player.__DEFAULT_HEALTH
+        self.__armor = Player.__DEFAULT_ARMOR
+
+    def move_up(self):
+        self.y -= self.__MOVEMENT_FACTOR
+
+    def move_down(self):
+        self.y += self.__MOVEMENT_FACTOR
+
+    def move_right(self):
+        self.x += self.__MOVEMENT_FACTOR
+
+    def move_left(self):
+        self.x -= self.__MOVEMENT_FACTOR
 
     def has_enough(self, price):
-        if self._coins >= price:
+        if self.__coins >= price:
             return True
         else:
             return False
 
     @property
     def x(self):
-        return self._x
+        return self.__x
 
     @x.setter
     def x(self, x):
-        self._x = x
+        self.__x = x
 
     @property
     def y(self):
-        return self._y
+        return self.__y
 
     @y.setter
     def y(self, y):
-        self._y = y
+        self.__y = y
 
     @property
     def coins(self):
-        return self._coins
+        return self.__coins
 
     @coins.setter
     def coins(self, coins):
-        self._coins = coins
+        self.__coins = coins
 
     def add_coins(self, added):
-        self._coins += added
+        self.__coins += added
 
     def remove_coins(self, removed):
-        self._coins = removed
+        self.__coins = removed
 
     @property
     def alive(self):
-        if self._health <= 0:
+        if self.__health <= 0:
             return True
         else:
             return False
 
     def hurt(self, damage_done):
-        self._health -= damage_done
+        self.__health -= damage_done
         return self.alive()  # checks if player is still alive after damage is done
 
     def heal(self, healing_done):
-        while self._health != self._DEFAULT_HEALTH:
-            pygame.time.delay(self._HEAL_DELAY)
-            self._health += 1
+        while self.__health != self.__DEFAULT_HEALTH:
+            pygame.time.delay(self.__HEAL_DELAY)
+            self.__health += 1
 
     def teleport(self, x, y):
-        self._x = x
-        self._y = y
+        self.__x = x
+        self.__y = y
 
-    def draw(self):
-        print("TODO")  # TODO
+    def draw(self, canvas):
+        pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 50, 50))  # TODO
