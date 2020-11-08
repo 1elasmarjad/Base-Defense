@@ -36,12 +36,14 @@ class Weapon:
             return True  # able to give ammo
 
 
-class Water_Gun(Weapon):
+class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
     __DAMAGE = 15
     __DAMAGE_DROP_OFF = 0.002
+    __RATE_OF_FIRE = 5
+    __AMMO_CAP = 140
 
     def __init__(self, ammo_given):
-        super().__init__(Water_Gun.__NAME, Water_Gun.__DAMAGE, Water_Gun.__DAMAGE_DROP_OFF, Water_Gun.__RATE_OF_FIRE,
-                         Water_Gun.__AMMO_CAP, ammo_given)
+        super().__init__(self.__NAME, self.__DAMAGE, self.__DAMAGE_DROP_OFF, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, ammo_given)

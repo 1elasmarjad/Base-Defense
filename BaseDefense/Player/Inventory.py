@@ -1,14 +1,10 @@
-from Weapons import Weapon
-
-
 class Inventory:
-    DEFAULT_WEAPON = Weapon.Water_Gun(50)
 
     def __init__(self, inventory_cap):
         if inventory_cap < 1:
             inventory_cap = 1
         self.inventory_cap = inventory_cap  # int
-        self.inv = [self.DEFAULT_WEAPON]
+        self.inv = []
         self.hovering_index = 0  # hovering over index 0
 
     def add_to_inventory(self, weapon):

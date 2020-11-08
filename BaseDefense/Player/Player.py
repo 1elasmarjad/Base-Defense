@@ -83,6 +83,9 @@ class Player:
             pygame.time.delay(self.__HEAL_DELAY)
             self.__health += 1
 
+    def open_inventory(self):
+        print("OPEN INVENTORY - TODO")  # TODO draw inventory
+
     def teleport(self, x, y):
         self.__x = x
         self.__y = y
