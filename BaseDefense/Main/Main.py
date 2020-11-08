@@ -13,9 +13,9 @@ import pygame
 DEFAULT_SCREEN_WIDTH = 1900
 DEFAULT_SCREEN_HEIGHT = 1000
 
-DEFAULT_WEAPON = Weapon.WaterGun(50)
-
 OCEAN_BLUE = (73, 136, 248)
+
+DEFAULT_WEAPON = Weapon.WaterGun(50)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -35,34 +35,40 @@ def check_events():
             exit()
 
 
-def cursor_app(x, y, display):
+def cursor_app(display):
+    x, y = pygame.mouse.get_pos()  # get mouse positions
     scope = pygame.image.load(r'C:/Users/Jad/Desktop/Base-Defense/BaseDefense/Player/scope.png').convert_alpha()
     display.blit(scope, (x, y))
 
 
-def check_input():
+def check_movement():
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_UP] or keys[pygame.K_w]:
-        player.move_up()
+        player.move_up(clock.tick())
 
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        player.move_right()
+        player.move_right(clock.tick())
 
     if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-        player.move_down()
+        player.move_down(clock.tick())
 
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        player.move_left()
+        player.move_left(clock.tick())
 
-    if keys[pygame.K_e]:
-        player.open_inventory()
-
-    # if keys[pygame.K_f] && close_to_shop:
-    #     #  TODO
+    # if keys[pygame.K_e]:
+    #     player.open_inventory()
+    #
+    # # if keys[pygame.K_f] && close_to_shop:
+    # #     #  TODO
 
     player.draw(display)  # draw
-    pygame.display.update()  # update display
+
+
+def check_essentials(display):
+    check_movement()
+    player.draw(display)
+    cursor_app(display)
 
 
 """
@@ -75,19 +81,20 @@ pygame.mouse.set_visible(False)
 clock = pygame.time.Clock()
 
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
+
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
-while running:
-    # ---------------------INIT--------------------
-    check_events()  # checks events, such as mouse clicked and tab closed
-    display.fill(OCEAN_BLUE)  # background colour
-    check_input()  # checks for input
-    # ---------------------INIT--------------------
 
-    player.draw(display)
-    mouse_x, mouse_y = pygame.mouse.get_pos()  # get mouse positions
-    cursor_app(mouse_x, mouse_y, display)  # adds graphics to the cursor
+print(player.inventory.get_current_weapon_ammo())
 
-    # ---------------------UPDATE------------------
-    pygame.display.update()  # update display
-    clock.tick(60)
-    # ---------------------UPDATE------------------
+# while running:
+#     # ---------------------INIT--------------------
+#     check_events()  # checks events, such as mouse clicked and tab closed
+#     display.fill(OCEAN_BLUE)  # background colour
+#     # ---------------------INIT--------------------
+#
+#     check_essentials(display)
+#
+#     # ---------------------UPDATE------------------
+#     pygame.display.update()  # update display
+#     clock.tick(100)
+#     # ---------------------UPDATE------------------

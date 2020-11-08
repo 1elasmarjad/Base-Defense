@@ -1,3 +1,6 @@
+from Weapons import Weapon
+
+
 class Inventory:
 
     def __init__(self, inventory_cap):
@@ -33,7 +36,24 @@ class Inventory:
         self.hovering_index += 1 % self.inventory_cap
 
     def current_weapon(self):
-        return self.inv[self.hovering_index - 1]
+        current_weapon = self.inv[self.hovering_index - 1]
+        return current_weapon
+
+    def get_current_weapon_ammo(self):
+        current_weapon = self.inv[self.hovering_index - 1]
+        print(current_weapon)
+        print(getattr(current_weapon, 'get_ammo'))
+        return getattr(current_weapon, 'get_ammo'.), getattr(current_weapon, 'get_ammo_cap') # todo
+
+
+
+        # if hasattr(current_weapon, 'get_ammo') and callable(getattr(current_weapon, 'get_ammo')) \
+        #         and hasattr(current_weapon, 'get_ammo_cap') and callable(getattr(current_weapon, 'get_ammo_cap')):
+        #     return current_weapon.get_ammo, current_weapon.get_ammo_cap
+
+
+        # object_methods = [method_name for method_name in dir(Weapon.Weapon)
+        #                   if callable(getattr(Weapon.Weapon, method_name))]
 
     def size(self):
         counter = 0

@@ -1,5 +1,6 @@
 from Player import Inventory
 import pygame
+from Weapons import Weapon
 
 
 class Player:
@@ -8,7 +9,7 @@ class Player:
     __DEFAULT_HEALTH = 130
     __DEFAULT_ARMOR = 20
     __HEAL_DELAY = 50
-    __MOVEMENT_FACTOR = 4
+    __MOVEMENT_FACTOR = 2
 
     def __init__(self, x, y):
         self.__x = x
@@ -19,16 +20,16 @@ class Player:
         self.__health = Player.__DEFAULT_HEALTH
         self.__armor = Player.__DEFAULT_ARMOR
 
-    def move_up(self):
+    def move_up(self, dt):
         self.y -= self.__MOVEMENT_FACTOR
 
-    def move_down(self):
+    def move_down(self, dt):
         self.y += self.__MOVEMENT_FACTOR
 
-    def move_right(self):
+    def move_right(self, dt):
         self.x += self.__MOVEMENT_FACTOR
 
-    def move_left(self):
+    def move_left(self, dt):
         self.x -= self.__MOVEMENT_FACTOR
 
     def has_enough(self, price):
@@ -78,13 +79,16 @@ class Player:
         self.__health -= damage_done
         return self.alive()  # checks if player is still alive after damage is done
 
+    # def shoot(self, x, y):
+    #     self.inventory.current_weapon() TODO
+
     def heal(self, healing_done):
         while self.__health != self.__DEFAULT_HEALTH:
             pygame.time.delay(self.__HEAL_DELAY)
             self.__health += 1
 
-    def open_inventory(self):
-        print("OPEN INVENTORY - TODO")  # TODO draw inventory
+    # def open_inventory(self):
+#     dir()  TODO
 
     def teleport(self, x, y):
         self.__x = x

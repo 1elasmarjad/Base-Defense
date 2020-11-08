@@ -35,6 +35,15 @@ class Weapon:
             self.ammo += amount
             return True  # able to give ammo
 
+    def get_ammo(self):
+        return self.ammo
+
+    def get_ammo_cap(self):
+        return self.ammo_cap
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class WaterGun(Weapon):
     pass
@@ -47,3 +56,5 @@ class WaterGun(Weapon):
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__DAMAGE_DROP_OFF, self.__RATE_OF_FIRE,
                          self.__AMMO_CAP, ammo_given)
+
+
