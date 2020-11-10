@@ -38,6 +38,10 @@ class Player:
         else:
             return False
 
+    def shoot(self, shoot_to_x, shoot_to_y, canvas):
+        if pygame.mouse.get_pressed()[0]:
+            self.inventory.current_weapon().fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
+
     @property
     def x(self):
         return self.__x
@@ -88,7 +92,7 @@ class Player:
             self.__health += 1
 
     # def open_inventory(self):
-#     dir()  TODO
+    #     dir()  TODO
 
     def teleport(self, x, y):
         self.__x = x

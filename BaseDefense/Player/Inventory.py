@@ -33,27 +33,16 @@ class Inventory:
         return False
 
     def next_weapon(self):
-        self.hovering_index += 1 % self.inventory_cap
+        print("TODO")
+        # return self.hovering_index += 1 % len(self.inv) TODO
 
     def current_weapon(self):
         current_weapon = self.inv[self.hovering_index - 1]
         return current_weapon
 
     def get_current_weapon_ammo(self):
-        current_weapon = self.inv[self.hovering_index - 1]
-        print(current_weapon)
-        print(getattr(current_weapon, 'get_ammo'))
-        return getattr(current_weapon, 'get_ammo'.), getattr(current_weapon, 'get_ammo_cap') # todo
-
-
-
-        # if hasattr(current_weapon, 'get_ammo') and callable(getattr(current_weapon, 'get_ammo')) \
-        #         and hasattr(current_weapon, 'get_ammo_cap') and callable(getattr(current_weapon, 'get_ammo_cap')):
-        #     return current_weapon.get_ammo, current_weapon.get_ammo_cap
-
-
-        # object_methods = [method_name for method_name in dir(Weapon.Weapon)
-        #                   if callable(getattr(Weapon.Weapon, method_name))]
+        current_weapon = self.current_weapon()
+        return current_weapon.ammo, current_weapon.ammo_cap
 
     def size(self):
         counter = 0

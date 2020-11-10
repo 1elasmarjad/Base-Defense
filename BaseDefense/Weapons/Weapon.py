@@ -12,6 +12,8 @@ ammo = the ammo a given weapon has
     - add more weapons
 """
 
+import pygame
+
 
 class Weapon:
     def __init__(self, name, damage, damage_drop_off, rate_of_fire, ammo_cap, ammo):
@@ -25,8 +27,14 @@ class Weapon:
     def reload(self):
         print("TODO")  # TODO
 
-    def fire(self, xFrom, yFrom, xTo, yTo):
-        print("TODO")  # TODO
+    def fire(self, xFrom, yFrom, xTo, yTo, canvas):
+        # draw bullet
+        xFrom += 25
+        yFrom += 25
+
+
+        pygame.draw.rect(canvas, 0, (xFrom, yFrom, 2, 2))
+        pygame.draw.rect(canvas, 0, (xFrom, yFrom, 2, 2))
 
     def giveAmmo(self, amount):
         if self.ammo + amount > self.ammo_cap:
@@ -49,7 +57,7 @@ class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
     __DAMAGE = 15
-    __DAMAGE_DROP_OFF = 0.002
+    __DAMAGE_DROP_OFF = 0.5
     __RATE_OF_FIRE = 5
     __AMMO_CAP = 140
 
@@ -58,3 +66,14 @@ class WaterGun(Weapon):
                          self.__AMMO_CAP, ammo_given)
 
 
+class Sniper(Weapon):
+    pass
+    __NAME = "Sniper"
+    __DAMAGE = 30
+    __DAMAGE_DROP_OFF = 0.001
+    __RATE_OF_FIRE = 3
+    __AMMO_CAP = 60
+
+    def __init__(self, ammo_given):
+        super().__init__(self.__NAME, self.__DAMAGE, self.__DAMAGE_DROP_OFF, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, ammo_given)
