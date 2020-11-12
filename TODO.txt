@@ -1,10 +1,11 @@
 TODO:
 
 PART 1: 
-- Add bullet projectiles (FIX SHOOT) 
-- Create bullet drop off formula
+- Add bullet projectiles  
+- Create bullet drop off formula ✓
 - Add bounds to character movement ✓
 - Make scope larger ✓
+- Add hovering over enemy allows to deal damage
 
 PART 2:
 - Open inventory

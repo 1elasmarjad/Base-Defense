@@ -2,7 +2,7 @@
 WEAPONS
 
 damage = the damage a weapon does (optimally)
-damage drop off = the drop off to -damage per pixel
+range = the range of the weapon until damage drops off
 rate of fire = the speed in which a given weapon can attack
 ammo cap = the capacity of how much ammo a given weapon can hold
 ammo = the ammo a given weapon has
@@ -12,15 +12,15 @@ ammo = the ammo a given weapon has
     - add more weapons
 """
 
-import pygame
 import math
+import random
 
 
 class Weapon:
-    def __init__(self, name, damage, damage_drop_off, rate_of_fire, ammo_cap, ammo):
+    def __init__(self, name, damage, rate_of_fire, ammo_cap, weapon_range, ammo):
         self.name = name
         self.damage = damage
-        self.damage_drop_off = damage_drop_off
+        self.weapon_range = weapon_range
         self.rate_of_fire = rate_of_fire
         self.ammo_cap = ammo_cap
         self.ammo = ammo
@@ -29,15 +29,18 @@ class Weapon:
         print("TODO")  # TODO
 
     def fire(self, xFrom, yFrom, xTo, yTo, canvas):
-        # DRAW BULLET
         xFrom += 25  # changes from location to accurate location
         yFrom += 25
+
+        # if xTo
 
         print(self.damage_done(xFrom, yFrom, xTo, yTo))
 
     def damage_done(self, xFrom, yFrom, xTo, yTo):
-        # return self.damage - (self.distance(xFrom, yFrom, xTo, yTo) * self.damage_drop_off) TODO bullet drop off formula
-        print("TODO")
+        if self.distance(xFrom, yFrom, xTo, yTo) >= self.weapon_range:  # out of range:
+            return self.__random_damage(self.damage, 5, 2)
+        else:  # in range:
+            return self.__random_damage(self.damage, 2, 1)
 
     def distance(self, xFrom, yFrom, xTo, yTo):
         distance = math.sqrt(math.pow(xTo - xFrom, 2) + math.pow(yTo - yFrom, 2))
@@ -58,6 +61,9 @@ class Weapon:
     def get_ammo_cap(self):
         return self.ammo_cap
 
+    def __random_damage(self, dmg, consistency1, consistency2):
+        return random.randint(dmg / consistency1, dmg / consistency2)
+
     def __str__(self):
         return f"{self.name}"
 
@@ -65,24 +71,24 @@ class Weapon:
 class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
-    __DAMAGE = 50
-    __DAMAGE_DROP_OFF = 0.5
+    __DAMAGE = 40
+    __RANGE_OF_FIRE = 300
     __RATE_OF_FIRE = 5
     __AMMO_CAP = 140
 
     def __init__(self, ammo_given):
-        super().__init__(self.__NAME, self.__DAMAGE, self.__DAMAGE_DROP_OFF, self.__RATE_OF_FIRE,
-                         self.__AMMO_CAP, ammo_given)
+        super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, self.__RANGE_OF_FIRE, ammo_given)
 
 
 class Sniper(Weapon):
     pass
     __NAME = "Sniper"
-    __DAMAGE = 90
-    __DAMAGE_DROP_OFF = 0.001
-    __RATE_OF_FIRE = 3
+    __DAMAGE = 60
+    __RANGE_OF_FIRE = 1200
+    __RATE_OF_FIRE = 1
     __AMMO_CAP = 60
 
     def __init__(self, ammo_given):
-        super().__init__(self.__NAME, self.__DAMAGE, self.__DAMAGE_DROP_OFF, self.__RATE_OF_FIRE,
-                         self.__AMMO_CAP, ammo_given)
+        super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, self.__RANGE_OF_FIRE, ammo_given)

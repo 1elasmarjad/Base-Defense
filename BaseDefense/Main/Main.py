@@ -7,6 +7,7 @@ Version     :   v0.1
 
 from Weapons import Weapon
 from Player import Player
+from Entites import Enemy
 import pygame
 
 # CONSTANTS
@@ -39,12 +40,26 @@ def check_events():
             pygame.quit()
             exit()
 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()  # get mouse positions
+            player.shoot(x, y, display)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                player.inventory.equip_next_weapon()
+                print(player.inventory.current_weapon)
+
 
 def cursor_app(display):
     x, y = pygame.mouse.get_pos()  # get mouse positions
     scope = pygame.image.load(r'C:/Users/Jad/Desktop/Base-Defense/BaseDefense/Player/scope.png').convert_alpha()
     display.blit(scope, (x, y))  # displays scope
-    player.shoot(x, y, display)  # checks if player has shot
+
+
+def check_essentials(display):
+    check_movement()
+    player.draw(display)
+    cursor_app(display)
 
 
 def check_movement():
@@ -62,17 +77,10 @@ def check_movement():
     if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.x >= 0:
         player.move_left(clock.tick())
 
-    player.draw(display)  # draw player
-
-
-def check_essentials(display):
-    check_movement()
-    player.draw(display)
-    cursor_app(display)
-
 
 # def check_inessentials(display):
-#     print("TODO")  # TODO
+#     if keys[pygame.K_r]:
+#         print("TRUE")
 
 
 """
@@ -84,6 +92,9 @@ def check_essentials(display):
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
+player.inventory.add_to_inventory(TEST_WEAPON)
+
+en = Enemy.SmallWoodenBoat(200, 200)
 
 while running:
     # ---------------------INIT--------------------
@@ -91,7 +102,9 @@ while running:
     display.fill(OCEAN_BLUE)  # background colour
     # ---------------------INIT--------------------
 
+    en.draw(display)
     check_essentials(display)
+
     # check_inessentials(display)
 
     # ---------------------UPDATE------------------

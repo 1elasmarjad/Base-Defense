@@ -42,8 +42,7 @@ class Player:
             return False
 
     def shoot(self, shoot_to_x, shoot_to_y, canvas):
-        if pygame.mouse.get_pressed()[0]:
-            self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
+        self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
 
     @property
     def x(self):
@@ -99,4 +98,4 @@ class Player:
         self.__y = y
 
     def draw(self, canvas):
-        pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 50, 50))  # TODO
+        pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 32, 32))  # TODO

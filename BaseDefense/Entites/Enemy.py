@@ -8,6 +8,8 @@ speed: the speed/ how fast the entity moves.
 
 """
 
+import pygame
+
 
 class Enemy:
     enemiesCounter = 0  # counts the number of enemies there are
@@ -86,4 +88,13 @@ class SmallWoodenBoat(Enemy):
     __NAME = "Small Wooden Boat"
 
     def __init__(self, x, y):
-        super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED, self.__RNG)
+        super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
+                         self.__RNG)
+        self.points = ([self.x, self.y], [self.x + 64, self.y], [self.x + 64, self.y + 64], [self.x, self.y + 64])
+        
+    def draw(self, canvas):
+        if not self.dead:
+            pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
+        else:
+            #is dead
+            print("DEAD cannot draw")
