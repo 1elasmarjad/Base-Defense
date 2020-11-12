@@ -10,6 +10,33 @@ class Inventory:
         self.inv = []
         self.hovering_index = 0  # hovering over index 0
 
+    def next_weapon(self):
+        if self.hovering_index + 1 < len(self.inv):
+            return self.inv[self.hovering_index]  # normal case
+        else:
+            return self.inv[0]  # go back to start of array
+
+    def next_index(self):
+        if self.hovering_index + 1 < len(self.inv):
+            return self.hovering_index + 1
+        else:
+            return 0
+
+    def equip_next_weapon(self):
+        self.hovering_index = self.next_index()
+
+    @property
+    def current_weapon(self):
+        return self.inv[self.hovering_index]
+
+    @current_weapon.setter
+    def current_weapon(self, wpn):
+        self.inv[self.hovering_index] = wpn
+
+    def weapon_at_index(self, index, wpn):
+        self.hovering_index = index
+        self.inv[index] = wpn
+
     def add_to_inventory(self, weapon):
         if self.inventory_cap <= self.size() != 0:
             print(f"Could not add to inventory - FULL - {self.size()}/{self.inventory_cap}")
@@ -31,14 +58,6 @@ class Inventory:
             if self.inv[counter - 1] == weapon:
                 return self.remove_index(counter - 1)
         return False
-
-    def next_weapon(self):
-        print("TODO")
-        # return self.hovering_index += 1 % len(self.inv) TODO
-
-    def current_weapon(self):
-        current_weapon = self.inv[self.hovering_index - 1]
-        return current_weapon
 
     def get_current_weapon_ammo(self):
         current_weapon = self.current_weapon()

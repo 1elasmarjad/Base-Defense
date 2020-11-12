@@ -16,6 +16,7 @@ DEFAULT_SCREEN_HEIGHT = 1000
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(50)
+TEST_WEAPON = Weapon.Sniper(20)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -49,16 +50,16 @@ def cursor_app(display):
 def check_movement():
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_UP] or keys[pygame.K_w]:
+    if keys[pygame.K_UP] or keys[pygame.K_w] and player.y >= 0:
         player.move_up(clock.tick())
 
-    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+    if keys[pygame.K_DOWN] or keys[pygame.K_s] and player.y <= pygame.display.get_window_size()[1] - 50:
         player.move_down(clock.tick())
 
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d] and player.x <= pygame.display.get_window_size()[0] - 50:
         player.move_right(clock.tick())
 
-    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+    if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.x >= 0:
         player.move_left(clock.tick())
 
     player.draw(display)  # draw player
@@ -68,6 +69,10 @@ def check_essentials(display):
     check_movement()
     player.draw(display)
     cursor_app(display)
+
+
+# def check_inessentials(display):
+#     print("TODO")  # TODO
 
 
 """
@@ -87,6 +92,7 @@ while running:
     # ---------------------INIT--------------------
 
     check_essentials(display)
+    # check_inessentials(display)
 
     # ---------------------UPDATE------------------
     pygame.display.update()  # update display

@@ -13,6 +13,7 @@ ammo = the ammo a given weapon has
 """
 
 import pygame
+import math
 
 
 class Weapon:
@@ -28,13 +29,21 @@ class Weapon:
         print("TODO")  # TODO
 
     def fire(self, xFrom, yFrom, xTo, yTo, canvas):
-        # draw bullet
-        xFrom += 25
+        # DRAW BULLET
+        xFrom += 25  # changes from location to accurate location
         yFrom += 25
 
+        print(self.damage_done(xFrom, yFrom, xTo, yTo))
 
-        pygame.draw.rect(canvas, 0, (xFrom, yFrom, 2, 2))
-        pygame.draw.rect(canvas, 0, (xFrom, yFrom, 2, 2))
+    def damage_done(self, xFrom, yFrom, xTo, yTo):
+        # return self.damage - (self.distance(xFrom, yFrom, xTo, yTo) * self.damage_drop_off) TODO bullet drop off formula
+        print("TODO")
+
+    def distance(self, xFrom, yFrom, xTo, yTo):
+        distance = math.sqrt(math.pow(xTo - xFrom, 2) + math.pow(yTo - yFrom, 2))
+        if distance <= 0:
+            distance = 1
+        return distance
 
     def giveAmmo(self, amount):
         if self.ammo + amount > self.ammo_cap:
@@ -56,7 +65,7 @@ class Weapon:
 class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
-    __DAMAGE = 15
+    __DAMAGE = 50
     __DAMAGE_DROP_OFF = 0.5
     __RATE_OF_FIRE = 5
     __AMMO_CAP = 140
@@ -69,7 +78,7 @@ class WaterGun(Weapon):
 class Sniper(Weapon):
     pass
     __NAME = "Sniper"
-    __DAMAGE = 30
+    __DAMAGE = 90
     __DAMAGE_DROP_OFF = 0.001
     __RATE_OF_FIRE = 3
     __AMMO_CAP = 60

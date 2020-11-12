@@ -1,6 +1,5 @@
 from Player import Inventory
 import pygame
-from Weapons import Weapon
 
 
 class Player:
@@ -22,15 +21,19 @@ class Player:
 
     def move_up(self, dt):
         self.y -= self.__MOVEMENT_FACTOR
+        return self.y
 
     def move_down(self, dt):
         self.y += self.__MOVEMENT_FACTOR
+        return self.y
 
     def move_right(self, dt):
         self.x += self.__MOVEMENT_FACTOR
+        return self.x
 
     def move_left(self, dt):
         self.x -= self.__MOVEMENT_FACTOR
+        return self.x
 
     def has_enough(self, price):
         if self.__coins >= price:
@@ -40,7 +43,7 @@ class Player:
 
     def shoot(self, shoot_to_x, shoot_to_y, canvas):
         if pygame.mouse.get_pressed()[0]:
-            self.inventory.current_weapon().fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
+            self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
 
     @property
     def x(self):
@@ -82,9 +85,6 @@ class Player:
     def hurt(self, damage_done):
         self.__health -= damage_done
         return self.alive()  # checks if player is still alive after damage is done
-
-    # def shoot(self, x, y):
-    #     self.inventory.current_weapon() TODO
 
     def heal(self, healing_done):
         while self.__health != self.__DEFAULT_HEALTH:
