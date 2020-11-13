@@ -121,6 +121,8 @@ while running:
 
     Text.DamageText.draw_all(display, font)  # displays all damage text on the screen
 
+
+
     # check_inessentials(display)
 
     # ---------------------UPDATE------------------
