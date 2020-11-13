@@ -1,13 +1,13 @@
 TODO:
 
-PART 1: 
 - Add bullet projectiles  
 - Create bullet drop off formula ✓
 - Add bounds to character movement ✓
 - Make scope larger ✓
 - Add hovering over enemy allows to deal damage ✓
 	- add damage done text pop up when dealing damage (fade out) 
+- Weapon and ammo display
 
-PART 2:
+- Enemy Movement
 - Open inventory
 
