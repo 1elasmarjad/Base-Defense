@@ -8,6 +8,7 @@ class EnemyList:
 
     @classmethod
     def draw_all(cls, display, show_hit_boxes):
+
         for i in range(len(cls.enemies)):
             cls.enemies[i].draw(display)
             if show_hit_boxes:

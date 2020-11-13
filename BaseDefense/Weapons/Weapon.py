@@ -3,7 +3,7 @@ WEAPONS
 
 damage = the damage a weapon does (optimally)
 range = the range of the weapon until damage drops off
-rate of fire = the speed in which a given weapon can attack
+rate of fire = the speed in which a given weapon can attack (lower the faster; higher the slower)
 ammo cap = the capacity of how much ammo a given weapon can hold
 ammo = the ammo a given weapon has
 
@@ -15,6 +15,7 @@ ammo = the ammo a given weapon has
 import math
 import random
 from Entites import EnemyList
+from UserInterface import Text
 import pygame
 
 
@@ -38,7 +39,6 @@ class Weapon:
     def fire(self, xFrom, yFrom, xTo, yTo, display, font):
 
         if self.ammo >= 1:
-
             xFrom += 16  # changes from location to accurate location
             yFrom += 16
 
@@ -47,27 +47,19 @@ class Weapon:
                 do_damage = self.damage_done(xFrom, yFrom, xTo, yTo)
                 enemy.health -= do_damage  # lose health
 
-                self.__text_fade_out(display, font, xTo + 35, yTo - 10, do_damage)
-
-                print(f"DID {do_damage} damage")
+                self.__text_fade_out(display, font, random.randint(xTo - 45, xTo + 45), yTo - 15, do_damage)
 
             self.ammo -= 1
 
     def __text_fade_out(self, display, font, x, y, disp_print):
 
-            text = font.render(str(disp_print), False, (200, 30, 30))
-
-            display.blit(text, (x, y))
-
-        # text = font.render(str(print), True, (200, 30, 30))
-        #
-        # display.blit(text, (x, y))
+        Text.DamageText.add(font, display, disp_print, x, y)
 
     def damage_done(self, xFrom, yFrom, xTo, yTo):
         if self.distance(xFrom, yFrom, xTo, yTo) >= self.weapon_range:  # out of range:
-            return int(self.__random_damage(self.damage, 5, 2))
+            return self.__random_damage(self.damage, 5, 2)
         else:  # in range:
-            return int(self.__random_damage(self.damage, 2, 1))
+            return self.__random_damage(self.damage, 2, 1)
 
     def distance(self, xFrom, yFrom, xTo, yTo):
         distance = math.sqrt(math.pow(xTo - xFrom, 2) + math.pow(yTo - yFrom, 2))
@@ -91,6 +83,9 @@ class Weapon:
     def __random_damage(self, dmg, consistency1, consistency2):
         return random.randint(dmg / consistency1, dmg / consistency2)
 
+    def rate_of_fire(self):
+        return self.rate_of_fire
+
     def __str__(self):
         return f"{self.name}"
 
@@ -100,7 +95,7 @@ class WaterGun(Weapon):
     __NAME = "Water Gun"
     __DAMAGE = 30
     __RANGE_OF_FIRE = 300
-    __RATE_OF_FIRE = 5
+    __RATE_OF_FIRE = 1
     __AMMO_CAP = 140
 
     def __init__(self, ammo_given):
@@ -111,9 +106,9 @@ class WaterGun(Weapon):
 class Sniper(Weapon):
     pass
     __NAME = "Sniper"
-    __DAMAGE = 60
+    __DAMAGE = 70
     __RANGE_OF_FIRE = 1200
-    __RATE_OF_FIRE = 1
+    __RATE_OF_FIRE = 7
     __AMMO_CAP = 60
 
     def __init__(self, ammo_given):

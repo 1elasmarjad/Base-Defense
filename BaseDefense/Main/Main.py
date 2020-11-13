@@ -8,6 +8,7 @@ Version     :   v0.1
 from Weapons import Weapon
 from Player import Player
 from Entites import Enemy, EnemyList
+from UserInterface import Text
 from Debug import Point_Finder
 import pygame
 
@@ -26,30 +27,18 @@ running = True
 
 display = pygame.display.set_mode((DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), pygame.SCALED and pygame.RESIZABLE)
 pygame.mouse.set_visible(False)
-font = pygame.font.Font(pygame.font.get_default_font(), 42)
+font = pygame.font.Font(pygame.font.get_default_font(), 24)
 clock = pygame.time.Clock()
+
+FRAME_RATE = 100
+
+last_shot = pygame.time.get_ticks()
 
 """
 ----------------------------------
          ↓ GAME METHODS ↓
 ----------------------------------
 """
-
-
-def check_events():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            x, y = pygame.mouse.get_pos()  # get mouse positions
-            player.shoot(x, y, display, font)
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
-                player.inventory.equip_next_weapon()
-                print(player.inventory.current_weapon)
 
 
 def cursor_app(display):
@@ -101,18 +90,42 @@ en = Enemy.SmallWoodenBoat(200, 200)
 while running:
     # ---------------------INIT--------------------
     display.fill(OCEAN_BLUE)  # background colour
-    check_events()  # checks events, such as mouse clicked and tab closed
+
+    for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:  # not hovering over shop
+
+            x, y = pygame.mouse.get_pos()  # get mouse positions
+            current_shot = pygame.time.get_ticks()
+            time_dif = current_shot - last_shot
+
+            if time_dif > player.inventory.current_weapon.rate_of_fire * 100:
+
+                last_shot = current_shot
+                player.shoot(x, y, display, font)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_r:
+                player.inventory.equip_next_weapon()
+                print(player.inventory.current_weapon)
+
     # ---------------------INIT--------------------
 
     EnemyList.EnemyList.draw_all(display, False)  # draws all enemies
     check_essentials(display)  # checks essentials such as movement
 
-    current_weapon_text = font.render(str(player.inventory.current_weapon), False, (0, 0, 0))
-    display.blit(current_weapon_text, (pygame.display.get_window_size()[0]/2 - 100, 0))
+    # current_weapon_text = font.render(str(player.inventory.current_weapon), False, (0, 0, 0))
+    # display.blit(current_weapon_text, (pygame.display.get_window_size()[0]/2 - 100, 0))
+
+    Text.DamageText.draw_all(display, font)  # displays all damage text on the screen
 
     # check_inessentials(display)
 
     # ---------------------UPDATE------------------
     pygame.display.update()  # update display
-    clock.tick(100)
+    clock.tick(FRAME_RATE)
     # ---------------------UPDATE------------------
