@@ -8,7 +8,15 @@ TODO:
 	- add damage done text pop up when dealing damage (fade out) ✓
 - Weapon rate of fire ✓
 
+
+- UI
+   - Weapon and ammo display
+   - Coins display
+   - Inventory section 
+
+- GAMEPLAY
+   - 
+
 - Enemy Movement
-- Open inventory
 - Weapon and ammo display
 
