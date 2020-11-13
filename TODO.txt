@@ -5,7 +5,8 @@ PART 1:
 - Create bullet drop off formula ✓
 - Add bounds to character movement ✓
 - Make scope larger ✓
-- Add hovering over enemy allows to deal damage
+- Add hovering over enemy allows to deal damage ✓
+	- add damage done text pop up when dealing damage (fade out) 
 
 PART 2:
 - Open inventory

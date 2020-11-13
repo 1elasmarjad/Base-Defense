@@ -7,7 +7,8 @@ Version     :   v0.1
 
 from Weapons import Weapon
 from Player import Player
-from Entites import Enemy
+from Entites import Enemy, EnemyList
+from Debug import Point_Finder
 import pygame
 
 # CONSTANTS
@@ -16,8 +17,7 @@ DEFAULT_SCREEN_HEIGHT = 1000
 
 OCEAN_BLUE = (73, 136, 248)
 
-DEFAULT_WEAPON = Weapon.WaterGun(50)
-TEST_WEAPON = Weapon.Sniper(20)
+DEFAULT_WEAPON = Weapon.WaterGun(40)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -92,7 +92,6 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
-player.inventory.add_to_inventory(TEST_WEAPON)
 
 en = Enemy.SmallWoodenBoat(200, 200)
 
@@ -102,8 +101,8 @@ while running:
     display.fill(OCEAN_BLUE)  # background colour
     # ---------------------INIT--------------------
 
-    en.draw(display)
-    check_essentials(display)
+    check_essentials(display)  # checks essentials such as movement
+    EnemyList.EnemyList.draw_all(display, False)  # draws all enemies
 
     # check_inessentials(display)
 

@@ -9,6 +9,8 @@ speed: the speed/ how fast the entity moves.
 """
 
 import pygame
+from Entites import EnemyList
+from Debug import Point_Finder
 
 
 class Enemy:
@@ -23,6 +25,7 @@ class Enemy:
         self.speed = speed
         self.rng = rng
         Enemy.enemiesCounter += 1
+        EnemyList.EnemyList.add(self)
 
     @property
     def loc(self):
@@ -72,16 +75,16 @@ class Enemy:
         return False
 
     def kill_self(self):
-        print("TODO")
-        # TODO
+        EnemyList.EnemyList.remove(self)
+        del self
 
     def __str__(self):
-        return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y}"
+        return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y} | {self.health}"
 
 
 class SmallWoodenBoat(Enemy):
     pass
-    __HEALTH = 20
+    __HEALTH = 40
     __ATTACK_DAMAGE = 10
     __RNG = 5
     __SPEED = 20
@@ -90,11 +93,31 @@ class SmallWoodenBoat(Enemy):
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
                          self.__RNG)
-        self.points = ([self.x, self.y], [self.x + 64, self.y], [self.x + 64, self.y + 64], [self.x, self.y + 64])
-        
+        self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
+
     def draw(self, canvas):
-        if not self.dead:
+        if not self.dead:  # not dead:
+            self.update_hit_box()
             pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
-        else:
-            #is dead
-            print("DEAD cannot draw")
+        else:  # is dead:
+            self.kill_self()
+
+    def draw_hitbox(self, canvas):
+        self.update_hit_box()
+        Point_Finder.Point_Finder.point(canvas, self.points[0][0], self.points[0][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[1][0], self.points[1][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[2][0], self.points[2][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[3][0], self.points[3][1])
+
+    def update_hit_box(self):
+        self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
+
+    def get_hit_point(self, point):
+        if point == 1:
+            return self.points[0][0], self.points[0][1]
+        elif point == 2:
+            return self.points[1][0], self.points[1][1]
+        elif point == 3:
+            return self.points[2][0], self.points[2][1]
+        elif point == 4:
+            return self.points[3][0], self.points[3][1]

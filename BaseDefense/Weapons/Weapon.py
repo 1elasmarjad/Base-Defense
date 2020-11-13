@@ -14,6 +14,8 @@ ammo = the ammo a given weapon has
 
 import math
 import random
+from Entites import EnemyList
+import pygame
 
 
 class Weapon:
@@ -25,22 +27,35 @@ class Weapon:
         self.ammo_cap = ammo_cap
         self.ammo = ammo
 
+        if self.ammo > self.ammo_cap:
+            self.ammo = self.ammo_cap
+        elif self.ammo < 0:
+            self.ammo = 0
+
     def reload(self):
         print("TODO")  # TODO
 
     def fire(self, xFrom, yFrom, xTo, yTo, canvas):
-        xFrom += 25  # changes from location to accurate location
-        yFrom += 25
 
-        # if xTo
+        if self.ammo >= 1:
 
-        print(self.damage_done(xFrom, yFrom, xTo, yTo))
+            xFrom += 16  # changes from location to accurate location
+            yFrom += 16
+
+            if EnemyList.EnemyList.hovering_over_enemy((xTo, yTo)):
+                enemy = EnemyList.EnemyList.hovering_over_enemy((xTo, yTo))
+                do_damage = self.damage_done(xFrom, yFrom, xTo, yTo)
+                enemy.health -= do_damage  # lose health
+                    
+                print(f"DID {do_damage} damage")
+
+            self.ammo -= 1
 
     def damage_done(self, xFrom, yFrom, xTo, yTo):
         if self.distance(xFrom, yFrom, xTo, yTo) >= self.weapon_range:  # out of range:
-            return self.__random_damage(self.damage, 5, 2)
+            return int(self.__random_damage(self.damage, 5, 2))
         else:  # in range:
-            return self.__random_damage(self.damage, 2, 1)
+            return int(self.__random_damage(self.damage, 2, 1))
 
     def distance(self, xFrom, yFrom, xTo, yTo):
         distance = math.sqrt(math.pow(xTo - xFrom, 2) + math.pow(yTo - yFrom, 2))
@@ -71,7 +86,7 @@ class Weapon:
 class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
-    __DAMAGE = 40
+    __DAMAGE = 30
     __RANGE_OF_FIRE = 300
     __RATE_OF_FIRE = 5
     __AMMO_CAP = 140
