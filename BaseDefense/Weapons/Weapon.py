@@ -6,10 +6,6 @@ range = the range of the weapon until damage drops off
 rate of fire = the speed in which a given weapon can attack (lower the faster; higher the slower)
 ammo cap = the capacity of how much ammo a given weapon can hold
 ammo = the ammo a given weapon has
-
-#todo
-    - add a reload
-    - add more weapons
 """
 
 import math
@@ -95,8 +91,21 @@ class WaterGun(Weapon):
     __NAME = "Water Gun"
     __DAMAGE = 30
     __RANGE_OF_FIRE = 300
+    __RATE_OF_FIRE = 2
+    __AMMO_CAP = 40
+
+    def __init__(self, ammo_given):
+        super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, self.__RANGE_OF_FIRE, ammo_given)
+
+
+class Pistol(Weapon):
+    pass
+    __NAME = "Pistol"
+    __DAMAGE = 20
+    __RANGE_OF_FIRE = 500
     __RATE_OF_FIRE = 1
-    __AMMO_CAP = 140
+    __AMMO_CAP = 70
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
@@ -109,7 +118,7 @@ class Sniper(Weapon):
     __DAMAGE = 70
     __RANGE_OF_FIRE = 1200
     __RATE_OF_FIRE = 7
-    __AMMO_CAP = 60
+    __AMMO_CAP = 20
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,

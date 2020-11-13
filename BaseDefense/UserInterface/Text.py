@@ -13,7 +13,8 @@ class DamageText:
             for i in range(len(cls.texts)):
                 cls.texts[i].draw(font, display)
         except IndexError:
-            print("Shot too fast (text fade error)")
+            print()
+
 
     @classmethod
     def remove(cls, obj):
