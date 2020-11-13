@@ -18,6 +18,7 @@ DEFAULT_SCREEN_HEIGHT = 1000
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(40)
+TEST_WEAPON = Weapon.Sniper(15)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -25,6 +26,7 @@ running = True
 
 display = pygame.display.set_mode((DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), pygame.SCALED and pygame.RESIZABLE)
 pygame.mouse.set_visible(False)
+font = pygame.font.Font(pygame.font.get_default_font(), 42)
 clock = pygame.time.Clock()
 
 """
@@ -42,7 +44,7 @@ def check_events():
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()  # get mouse positions
-            player.shoot(x, y, display)
+            player.shoot(x, y, display, font)
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_r:
@@ -92,17 +94,21 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
+player.inventory.add_to_inventory(TEST_WEAPON)
 
 en = Enemy.SmallWoodenBoat(200, 200)
 
 while running:
     # ---------------------INIT--------------------
-    check_events()  # checks events, such as mouse clicked and tab closed
     display.fill(OCEAN_BLUE)  # background colour
+    check_events()  # checks events, such as mouse clicked and tab closed
     # ---------------------INIT--------------------
 
-    check_essentials(display)  # checks essentials such as movement
     EnemyList.EnemyList.draw_all(display, False)  # draws all enemies
+    check_essentials(display)  # checks essentials such as movement
+
+    current_weapon_text = font.render(str(player.inventory.current_weapon), False, (0, 0, 0))
+    display.blit(current_weapon_text, (pygame.display.get_window_size()[0]/2 - 100, 0))
 
     # check_inessentials(display)
 

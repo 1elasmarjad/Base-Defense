@@ -35,7 +35,7 @@ class Weapon:
     def reload(self):
         print("TODO")  # TODO
 
-    def fire(self, xFrom, yFrom, xTo, yTo, canvas):
+    def fire(self, xFrom, yFrom, xTo, yTo, display, font):
 
         if self.ammo >= 1:
 
@@ -46,10 +46,22 @@ class Weapon:
                 enemy = EnemyList.EnemyList.hovering_over_enemy((xTo, yTo))
                 do_damage = self.damage_done(xFrom, yFrom, xTo, yTo)
                 enemy.health -= do_damage  # lose health
-                    
+
+                self.__text_fade_out(display, font, xTo + 35, yTo - 10, do_damage)
+
                 print(f"DID {do_damage} damage")
 
             self.ammo -= 1
+
+    def __text_fade_out(self, display, font, x, y, disp_print):
+
+            text = font.render(str(disp_print), False, (200, 30, 30))
+
+            display.blit(text, (x, y))
+
+        # text = font.render(str(print), True, (200, 30, 30))
+        #
+        # display.blit(text, (x, y))
 
     def damage_done(self, xFrom, yFrom, xTo, yTo):
         if self.distance(xFrom, yFrom, xTo, yTo) >= self.weapon_range:  # out of range:

@@ -41,8 +41,8 @@ class Player:
         else:
             return False
 
-    def shoot(self, shoot_to_x, shoot_to_y, canvas):
-        self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, canvas)
+    def shoot(self, shoot_to_x, shoot_to_y, display, font):
+        self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, display, font)
 
     @property
     def x(self):
