@@ -1,6 +1,6 @@
 TODO:
 
-- Add bullet projectiles  
+- Add bullet projectiles; need to rethink logic 
 - Create bullet drop off formula ✓
 - Add bounds to character movement ✓
 - Make scope larger ✓

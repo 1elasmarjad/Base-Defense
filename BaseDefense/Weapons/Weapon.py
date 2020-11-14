@@ -12,7 +12,7 @@ import math
 import random
 from Entites import EnemyList
 from UserInterface import Text
-import pygame
+from Weapons import Projectile
 
 
 class Weapon:
@@ -35,8 +35,8 @@ class Weapon:
     def fire(self, xFrom, yFrom, xTo, yTo, display, font):
 
         if self.ammo >= 1:
-            xFrom += 16  # changes from location to accurate location
-            yFrom += 16
+
+            # Projectile.ProjectileList.add(xFrom, yFrom, xTo, yTo, 1, 0, 0, 0)
 
             if EnemyList.EnemyList.hovering_over_enemy((xTo, yTo)):
                 enemy = EnemyList.EnemyList.hovering_over_enemy((xTo, yTo))

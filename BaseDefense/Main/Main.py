@@ -5,7 +5,7 @@ Description :   Defend your home base from unwanted enemy boats, ships, warships
 Version     :   v0.1
 """
 
-from Weapons import Weapon
+from Weapons import Weapon, Projectile
 from Player import Player
 from Entites import Enemy, EnemyList
 from UserInterface import Text
@@ -42,7 +42,7 @@ last_shot = pygame.time.get_ticks()
 
 def cursor_app(display):
     x, y = pygame.mouse.get_pos()  # get mouse positions
-    scope = pygame.image.load(r'C:/Users/Jad/Desktop/Base-Defense/BaseDefense/Player/scope.png').convert_alpha()
+    scope = pygame.image.load('scope.png').convert_alpha()
     display.blit(scope, (x, y))  # displays scope
 
 
@@ -102,7 +102,6 @@ while running:
             time_dif = current_shot - last_shot
 
             if time_dif > player.inventory.current_weapon.rate_of_fire * 100:
-
                 last_shot = current_shot
                 player.shoot(x, y, display, font)
 
@@ -120,9 +119,7 @@ while running:
     # display.blit(current_weapon_text, (pygame.display.get_window_size()[0]/2 - 100, 0))
 
     Text.DamageText.draw_all(display, font)  # displays all damage text on the screen
-
-
-
+    Projectile.ProjectileList.draw_all(display)
     # check_inessentials(display)
 
     # ---------------------UPDATE------------------
