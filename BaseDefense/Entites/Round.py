@@ -35,6 +35,11 @@ class Round:
             cls.generate_small_wooden_boats(8)
 
     @classmethod
+    def generate_small_wooden_boats(cls, amnt):
+        for i in range(amnt):
+            EnemyList.EnemyList.add(Enemy.SmallWoodenBoat(cls.__random_x(), cls.__random_y()))
+
+    @classmethod
     def check_round(cls, enms, display):
         counter_font = pygame.font.Font(pygame.font.get_default_font(), 30)
 
@@ -52,11 +57,6 @@ class Round:
         display.blit(text, text_rect)
 
     @classmethod
-    def generate_small_wooden_boats(cls, amnt):
-        for i in range(amnt):
-            EnemyList.EnemyList.add(Enemy.SmallWoodenBoat(cls.__random_x(), cls.__random_y()))
-
-    @classmethod
     def __random_x(cls):
         if random.randint(1, 2) == 1:
             # LEFT SIDE
@@ -67,4 +67,4 @@ class Round:
 
     @classmethod
     def __random_y(cls):
-        return random.randint(100, 980)
+        return random.randint(200, 980)

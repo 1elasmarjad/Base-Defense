@@ -123,6 +123,9 @@ while running:
 
     Round.Round.check_round(EnemyList.EnemyList.count_enemies(), display)  # checks if round is done or not
 
+    if Round.Round.round_ended:
+        player.heal_up()
+
     if not player.alive:
         end_text = font.render(f"YOU GOT TO ROUND {Round.Round.rnd}!", False, (250, 20, 0))
         end_text_rect = end_text.get_rect(center=(960, 510))

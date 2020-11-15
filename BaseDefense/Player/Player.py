@@ -1,11 +1,11 @@
-from Player import Inventory
+from Player import Inventory, PlayerUI
 import pygame
 
 
 class Player:
     __DEFAULT_COINS = 1000
     __DEFAULT_INVENTORY_SIZE = 2
-    __DEFAULT_HEALTH = 200
+    DEFAULT_HEALTH = 200
     __DEFAULT_ARMOR = 20
     __HEAL_DELAY = 50
     __MOVEMENT_FACTOR = 2
@@ -16,7 +16,7 @@ class Player:
         self.__coins = Player.__DEFAULT_COINS
         self.__alive = True
         self.inventory = Inventory.Inventory(Player.__DEFAULT_INVENTORY_SIZE)
-        self.__health = Player.__DEFAULT_HEALTH
+        self.__health = Player.DEFAULT_HEALTH
         self.__armor = Player.__DEFAULT_ARMOR
 
     def move_up(self, dt):
@@ -84,10 +84,8 @@ class Player:
     def hurt(self, damage_done):
         self.__health -= damage_done
 
-    def heal(self, healing_done):
-        while self.__health != self.__DEFAULT_HEALTH:
-            pygame.time.delay(self.__HEAL_DELAY)
-            self.__health += 1
+    def heal_up(self):
+        self.__health = self.DEFAULT_HEALTH
 
     # def open_inventory(self):
     #     dir()  TODO
@@ -100,10 +98,5 @@ class Player:
         # PLAYER:
         pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 32, 32))  # TODO
         # HEALTH BAR:
-        bar_x, bar_y = 960 - 150, 930
-        bar_thickness = 25
-        if self.alive:
-            pygame.draw.rect(canvas, (255, 0, 0), (bar_x, bar_y, self.__DEFAULT_HEALTH * 1.5, bar_thickness))
-            pygame.draw.rect(canvas, (0, 255, 0), (bar_x, bar_y, self.__health * 1.5, bar_thickness))
-        else:
-            pygame.draw.rect(canvas, (255, 0, 0), (bar_x, bar_y, self.__DEFAULT_HEALTH * 1.5, bar_thickness))
+        PlayerUI.UI.healthbar(canvas, 810, 880, 25, self.__health, self.DEFAULT_HEALTH, self.alive)
+        PlayerUI.UI.ammo(canvas, 810, 930, self.inventory.current_weapon, self.alive)
