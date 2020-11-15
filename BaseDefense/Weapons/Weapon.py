@@ -77,7 +77,7 @@ class Weapon:
         return self.ammo_cap
 
     def __random_damage(self, dmg, consistency1, consistency2):
-        return random.randint(dmg / consistency1, dmg / consistency2)
+        return int(random.uniform(dmg / consistency1, dmg / consistency2))
 
     def rate_of_fire(self):
         return self.rate_of_fire
@@ -89,7 +89,7 @@ class Weapon:
 class WaterGun(Weapon):
     pass
     __NAME = "Water Gun"
-    __DAMAGE = 30
+    __DAMAGE = 23
     __RANGE_OF_FIRE = 300
     __RATE_OF_FIRE = 1.2
     __AMMO_CAP = 200

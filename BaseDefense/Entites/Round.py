@@ -67,4 +67,4 @@ class Round:
 
     @classmethod
     def __random_y(cls):
-        return random.randint(64, 1016)
+        return random.randint(100, 980)

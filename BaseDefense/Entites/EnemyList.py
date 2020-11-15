@@ -3,11 +3,10 @@ class EnemyList:
     enemies = []
 
     @classmethod
-    def draw_all(cls, display, show_hit_boxes):
-
+    def draw_all(cls, display, show_hit_boxes, player, font):
         try:
             for i in range(len(cls.enemies)):
-                cls.enemies[i].draw(display)
+                cls.enemies[i].draw(display, player, font)
                 if show_hit_boxes:
                     cls.enemies[i].draw_hitbox(display)
         except IndexError:

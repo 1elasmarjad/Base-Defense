@@ -2,7 +2,7 @@
 ENEMIES
 
 health: amount of health a given entity has before it dies.
-rng: the range/ how far a entity can be to deal damage.
+rng: the range/ how far a entity can be to deal damage. The higher the larger the range, the lower the smalelr the range.
 damage: the damage an entity will generally do when attacking.
 speed: the speed/ how fast the entity moves.
 
@@ -11,11 +11,12 @@ speed: the speed/ how fast the entity moves.
 import pygame
 from Entites import EnemyList
 from Debug import Point_Finder
-
+import random
+from UserInterface import Text
 
 class Enemy:
 
-    def __init__(self, x, y, name, health, attack_damage, speed, rng, stop_distance):
+    def __init__(self, x, y, name, health, attack_damage, speed, rng, rof):
         self.x = x
         self.y = y
         self.name = name
@@ -23,8 +24,9 @@ class Enemy:
         self.attack_damage = attack_damage
         self.speed = speed
         self.rng = rng
-        self.stop_distance = stop_distance
+        self.rate_of_fire = rof
         EnemyList.EnemyList.add(self)
+        self.last_shot = pygame.time.get_ticks()
 
         if self.x > 1128:
             self.left_sided = False
@@ -82,6 +84,19 @@ class Enemy:
         EnemyList.EnemyList.remove(self)
         del self
 
+    def shoot(self, player, font, display):
+        current_shot = pygame.time.get_ticks()
+        time_dif = current_shot - self.last_shot
+
+        if time_dif > self.rate_of_fire * 100 and player.alive:
+            self.last_shot = pygame.time.get_ticks()
+            do_dmg = self.__random_damage(self.attack_damage / 2, self.attack_damage)
+            player.hurt(do_dmg)
+            Text.DamageText.add(font, display, str(do_dmg), player.x - 30, player.y - 20)
+
+    def __random_damage(self, least_dam, max_dam):
+        return int(random.uniform(least_dam, max_dam))
+
     def __str__(self):
         return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y} | {self.health}"
 
@@ -114,22 +129,24 @@ class SmallWoodenBoat(Enemy, ThirtyBit):
     pass
     __HEALTH = 40
     __ATTACK_DAMAGE = 10
-    __RNG = 5
+    __RNG = 50
     __SPEED = 0.50
-    __STOP_DISTANCE = 200
+    __RATE_OF_FIRE = 15
     __NAME = "Small Wooden Boat"
 
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
-                         self.__RNG, self.__STOP_DISTANCE)
+                         self.__RNG, self.__RATE_OF_FIRE)
         self.update_hit_box()
 
-    def draw(self, canvas):
+    def draw(self, canvas, player, font):
         if not self.dead:  # not dead:
-            if self.left_sided and self.x <= 728 - self.__STOP_DISTANCE:
+            if self.left_sided and self.x <= 728 - self.__RNG:
                 self.x += self.__SPEED
-            elif not self.left_sided and self.x >= 1128 + self.__STOP_DISTANCE:
+            elif not self.left_sided and self.x >= 1160 + self.__RNG:
                 self.x -= self.__SPEED
+            else:  # in range:
+                self.shoot(player, font, canvas)
 
             self.update_hit_box()
             pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO

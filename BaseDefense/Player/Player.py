@@ -5,7 +5,7 @@ import pygame
 class Player:
     __DEFAULT_COINS = 1000
     __DEFAULT_INVENTORY_SIZE = 2
-    __DEFAULT_HEALTH = 130
+    __DEFAULT_HEALTH = 200
     __DEFAULT_ARMOR = 20
     __HEAL_DELAY = 50
     __MOVEMENT_FACTOR = 2
@@ -76,14 +76,13 @@ class Player:
 
     @property
     def alive(self):
-        if self.__health <= 0:
+        if self.__health > 0:
             return True
         else:
             return False
 
     def hurt(self, damage_done):
         self.__health -= damage_done
-        return self.alive()  # checks if player is still alive after damage is done
 
     def heal(self, healing_done):
         while self.__health != self.__DEFAULT_HEALTH:
@@ -98,4 +97,13 @@ class Player:
         self.__y = y
 
     def draw(self, canvas):
+        # PLAYER:
         pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 32, 32))  # TODO
+        # HEALTH BAR:
+        bar_x, bar_y = 960 - 150, 930
+        bar_thickness = 25
+        if self.alive:
+            pygame.draw.rect(canvas, (255, 0, 0), (bar_x, bar_y, self.__DEFAULT_HEALTH * 1.5, bar_thickness))
+            pygame.draw.rect(canvas, (0, 255, 0), (bar_x, bar_y, self.__health * 1.5, bar_thickness))
+        else:
+            pygame.draw.rect(canvas, (255, 0, 0), (bar_x, bar_y, self.__DEFAULT_HEALTH * 1.5, bar_thickness))
