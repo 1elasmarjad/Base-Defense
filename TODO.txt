@@ -10,16 +10,16 @@ TODO:
 
 
 - UI
-   - Weapon and ammo display
+   - Weapon and ammo display ✓
    - Coins display
    - Inventory section 
 
 - GAMEPLAY
    - Rounds ✓ still WIP.
-   - Enemies will damage player when they stop moving.
+   - Enemies will damage player when they stop moving. ✓
    - Enemy Movement ✓
 
-   - BUG: EnemyList count_enemies only works when /2, print does not need the /2; does not effect the gameplay
-
+- WHEN ADDING A WEAPON, add to PlayerUI and Weapons
+	
 
 

@@ -99,4 +99,4 @@ class Player:
         pygame.draw.rect(canvas, (255, 0, 0), (self.x, self.y, 32, 32))  # TODO
         # HEALTH BAR:
         PlayerUI.UI.healthbar(canvas, 810, 880, 25, self.__health, self.DEFAULT_HEALTH, self.alive)
-        PlayerUI.UI.ammo(canvas, 810, 930, self.inventory.current_weapon, self.alive)
+        PlayerUI.UI.weapon(canvas, self.inventory.current_weapon, self.alive)
