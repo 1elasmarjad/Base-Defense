@@ -14,9 +14,8 @@ from Debug import Point_Finder
 
 
 class Enemy:
-    enemiesCounter = 0  # counts the number of enemies there are
 
-    def __init__(self, x, y, name, health, attack_damage, speed, rng):
+    def __init__(self, x, y, name, health, attack_damage, speed, rng, stop_distance):
         self.x = x
         self.y = y
         self.name = name
@@ -24,8 +23,13 @@ class Enemy:
         self.attack_damage = attack_damage
         self.speed = speed
         self.rng = rng
-        Enemy.enemiesCounter += 1
+        self.stop_distance = stop_distance
         EnemyList.EnemyList.add(self)
+
+        if self.x > 1128:
+            self.left_sided = False
+        elif self.x < 728:
+            self.left_sided = True
 
     @property
     def loc(self):
@@ -87,16 +91,22 @@ class SmallWoodenBoat(Enemy):
     __HEALTH = 40
     __ATTACK_DAMAGE = 10
     __RNG = 5
-    __SPEED = 20
+    __SPEED = 3
+    __STOP_DISTANCE = 200
     __NAME = "Small Wooden Boat"
 
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
-                         self.__RNG)
+                         self.__RNG, self.__STOP_DISTANCE)
         self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
 
     def draw(self, canvas):
         if not self.dead:  # not dead:
+            if self.left_sided and self.x <= 728 - self.__STOP_DISTANCE:
+                self.x += self.__SPEED
+            elif not self.left_sided and self.x >= 1128 + self.__STOP_DISTANCE:
+                self.x -= self.__SPEED
+
             self.update_hit_box()
             pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
         else:  # is dead:

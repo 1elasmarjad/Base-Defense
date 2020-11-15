@@ -32,6 +32,10 @@ class EnemyList:
         return False
 
     @classmethod
+    def count_enemies(cls):
+        return len(cls.enemies)
+
+    @classmethod
     def add(cls, en):
         cls.enemies.append(en)
 

@@ -7,9 +7,8 @@ Version     :   v0.1
 
 from Weapons import Weapon, Projectile
 from Player import Player
-from Entites import Enemy, EnemyList
+from Entites import Enemy, EnemyList, Round
 from UserInterface import Text
-from Debug import Point_Finder
 import pygame
 
 # CONSTANTS
@@ -61,10 +60,11 @@ def check_movement():
     if keys[pygame.K_DOWN] or keys[pygame.K_s] and player.y <= pygame.display.get_window_size()[1] - 50:
         player.move_down(clock.tick())
 
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d] and player.x <= pygame.display.get_window_size()[0] - 50:
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d] and player.x <= pygame.display.get_window_size()[
+        0] - 50 and player.x < 1160 - 32:
         player.move_right(clock.tick())
 
-    if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.x >= 0:
+    if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.x >= 0 and player.x > 760:
         player.move_left(clock.tick())
 
 
@@ -83,11 +83,12 @@ player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
 
-en = Enemy.SmallWoodenBoat(200, 200)
+en = Enemy.SmallWoodenBoat(1720, 200)
 
 while running:
     # ---------------------INIT--------------------
     display.fill(OCEAN_BLUE)  # background colour
+    pygame.draw.rect(display, (200, 170, 60), (760, 0, 400, 1080))
 
     for event in pygame.event.get():
 
@@ -123,6 +124,10 @@ while running:
     # check_inessentials(display)
 
     # ---------------------UPDATE------------------
+    # if EnemyList.EnemyList.count_enemies() <= 0:
+    #     Round.Round.go_to_next()
+    #     Round.Round.start_round() TODO
+
     pygame.display.update()  # update display
     clock.tick(FRAME_RATE)
     # ---------------------UPDATE------------------

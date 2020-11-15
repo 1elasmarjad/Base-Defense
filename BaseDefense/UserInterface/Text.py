@@ -13,7 +13,7 @@ class DamageText:
             for i in range(len(cls.texts)):
                 cls.texts[i].draw(font, display)
         except IndexError:
-            print("[BUG] damage display was shown too fast; no impact on gameplay")
+            None
 
     @classmethod
     def remove(cls, obj):
