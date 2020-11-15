@@ -10,6 +10,7 @@ from Player import Player
 from Entites import Enemy, EnemyList, Round
 from UserInterface import Text
 import pygame
+from Debug import Point_Finder
 
 # CONSTANTS
 DEFAULT_SCREEN_WIDTH = 1900
@@ -41,7 +42,7 @@ last_shot = pygame.time.get_ticks()
 
 def cursor_app(display):
     x, y = pygame.mouse.get_pos()  # get mouse positions
-    scope = pygame.image.load('scope.png').convert_alpha()
+    scope = pygame.image.load('scope.png')
     display.blit(scope, (x, y))  # displays scope
 
 
@@ -68,11 +69,6 @@ def check_movement():
         player.move_left(clock.tick())
 
 
-# def check_inessentials(display):
-#     if keys[pygame.K_r]:
-#         print("TRUE")
-
-
 """
 ----------------------------------
           ↓ GAME LOOP ↓
@@ -82,8 +78,6 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
-
-en = Enemy.SmallWoodenBoat(1720, 200)
 
 while running:
     # ---------------------INIT--------------------
@@ -110,24 +104,22 @@ while running:
             if event.key == pygame.K_r:
                 player.inventory.equip_next_weapon()
                 print(player.inventory.current_weapon)
+            if event.key == pygame.K_SPACE and Round.Round.round_ended:
+                Round.Round.next_round()
+                Round.Round.start_round()
 
     # ---------------------INIT--------------------
 
     EnemyList.EnemyList.draw_all(display, False)  # draws all enemies
+
     check_essentials(display)  # checks essentials such as movement
 
-    # current_weapon_text = font.render(str(player.inventory.current_weapon), False, (0, 0, 0))
-    # display.blit(current_weapon_text, (pygame.display.get_window_size()[0]/2 - 100, 0))
-
     Text.DamageText.draw_all(display, font)  # displays all damage text on the screen
-    Projectile.ProjectileList.draw_all(display)
-    # check_inessentials(display)
+    Projectile.ProjectileList.draw_all(display)  # display projectiles
+
+    Round.Round.check_round(EnemyList.EnemyList.count_enemies(), display)  # checks if round is done or not
 
     # ---------------------UPDATE------------------
-    # if EnemyList.EnemyList.count_enemies() <= 0:
-    #     Round.Round.go_to_next()
-    #     Round.Round.start_round() TODO
-
     pygame.display.update()  # update display
     clock.tick(FRAME_RATE)
     # ---------------------UPDATE------------------

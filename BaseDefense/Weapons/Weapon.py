@@ -91,8 +91,8 @@ class WaterGun(Weapon):
     __NAME = "Water Gun"
     __DAMAGE = 30
     __RANGE_OF_FIRE = 300
-    __RATE_OF_FIRE = 2
-    __AMMO_CAP = 40
+    __RATE_OF_FIRE = 1.2
+    __AMMO_CAP = 200
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
@@ -105,7 +105,7 @@ class Pistol(Weapon):
     __DAMAGE = 20
     __RANGE_OF_FIRE = 500
     __RATE_OF_FIRE = 1
-    __AMMO_CAP = 70
+    __AMMO_CAP = 200
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
@@ -118,7 +118,7 @@ class Sniper(Weapon):
     __DAMAGE = 70
     __RANGE_OF_FIRE = 1200
     __RATE_OF_FIRE = 7
-    __AMMO_CAP = 20
+    __AMMO_CAP = 40
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,

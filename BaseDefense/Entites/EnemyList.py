@@ -1,7 +1,3 @@
-import pygame
-from Weapons import Weapon
-
-
 class EnemyList:
     __SIZE_OF_SCOPE = 64
     enemies = []
@@ -9,10 +5,13 @@ class EnemyList:
     @classmethod
     def draw_all(cls, display, show_hit_boxes):
 
-        for i in range(len(cls.enemies)):
-            cls.enemies[i].draw(display)
-            if show_hit_boxes:
-                cls.enemies[i].draw_hitbox(display)
+        try:
+            for i in range(len(cls.enemies)):
+                cls.enemies[i].draw(display)
+                if show_hit_boxes:
+                    cls.enemies[i].draw_hitbox(display)
+        except IndexError:
+            None
 
     @classmethod
     def hovering_over_enemy(cls, mouse_pos):
@@ -33,7 +32,7 @@ class EnemyList:
 
     @classmethod
     def count_enemies(cls):
-        return len(cls.enemies)
+        return int(len(cls.enemies) / 2)
 
     @classmethod
     def add(cls, en):
@@ -46,3 +45,7 @@ class EnemyList:
     @classmethod
     def remove(cls, en):
         cls.enemies.remove(en)
+
+    @classmethod
+    def debug(cls):
+        print(cls.enemies)

@@ -21,7 +21,7 @@ class DamageText:
 
 
 class TextFadeOut:
-    __FADE_AWAY_TIME = 4  # higher the faster, smaller the slower
+    __FADE_AWAY_TIME = 2  # higher the faster, smaller the slower
 
     def __init__(self, font, display, string_text, x, y):
         self.string_text = string_text

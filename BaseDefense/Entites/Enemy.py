@@ -91,7 +91,7 @@ class SmallWoodenBoat(Enemy):
     __HEALTH = 40
     __ATTACK_DAMAGE = 10
     __RNG = 5
-    __SPEED = 3
+    __SPEED = 0.50
     __STOP_DISTANCE = 200
     __NAME = "Small Wooden Boat"
 
