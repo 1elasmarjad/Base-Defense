@@ -16,8 +16,10 @@ TODO:
 
 - GAMEPLAY
    - Rounds ✓ still WIP.
+   - Enemies will damage player when they stop moving.
+   - Enemy Movement ✓
+
    - BUG: EnemyList count_enemies only works when /2, print does not need the /2; does not effect the gameplay
 
-- Enemy Movement
-- Weapon and ammo display
+
 
