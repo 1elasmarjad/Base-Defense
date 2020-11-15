@@ -18,7 +18,7 @@ DEFAULT_SCREEN_HEIGHT = 1000
 
 OCEAN_BLUE = (73, 136, 248)
 
-DEFAULT_WEAPON = Weapon.WaterGun(40)
+DEFAULT_WEAPON = Weapon.WaterGun(200)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -77,7 +77,7 @@ def check_movement():
 
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
-player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give watergun as default weapon
+player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give water gun as default weapon
 
 while running:
     # ---------------------INIT--------------------

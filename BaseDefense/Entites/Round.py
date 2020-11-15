@@ -31,6 +31,8 @@ class Round:
             cls.generate_small_wooden_boats(2)
         elif cls.rnd == 2:
             cls.generate_small_wooden_boats(6)
+        elif cls.rnd == 3:
+            cls.generate_small_wooden_boats(8)
 
     @classmethod
     def check_round(cls, enms, display):
@@ -38,7 +40,7 @@ class Round:
 
         if enms <= 0:
             cls.round_ended = True
-            out = f"Round {cls.rnd + 1}"
+            out = f"Round {cls.rnd + 1}..."
             advance_rect = cls.advance.get_rect(center=(960, 150))
             display.blit(cls.advance, advance_rect)  # displays scope
         else:

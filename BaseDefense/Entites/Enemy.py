@@ -86,7 +86,31 @@ class Enemy:
         return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y} | {self.health}"
 
 
-class SmallWoodenBoat(Enemy):
+class ThirtyBit:
+    pass
+
+    def draw_hitbox(self, canvas):
+        self.update_hit_box()
+        Point_Finder.Point_Finder.point(canvas, self.points[0][0], self.points[0][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[1][0], self.points[1][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[2][0], self.points[2][1])
+        Point_Finder.Point_Finder.point(canvas, self.points[3][0], self.points[3][1])
+
+    def get_hit_point(self, point):
+        if point == 1:
+            return self.points[0][0], self.points[0][1]
+        elif point == 2:
+            return self.points[1][0], self.points[1][1]
+        elif point == 3:
+            return self.points[2][0], self.points[2][1]
+        elif point == 4:
+            return self.points[3][0], self.points[3][1]
+
+    def update_hit_box(self):
+        self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
+
+
+class SmallWoodenBoat(Enemy, ThirtyBit):
     pass
     __HEALTH = 40
     __ATTACK_DAMAGE = 10
@@ -98,7 +122,7 @@ class SmallWoodenBoat(Enemy):
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
                          self.__RNG, self.__STOP_DISTANCE)
-        self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
+        self.update_hit_box()
 
     def draw(self, canvas):
         if not self.dead:  # not dead:
@@ -111,23 +135,3 @@ class SmallWoodenBoat(Enemy):
             pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
         else:  # is dead:
             self.kill_self()
-
-    def draw_hitbox(self, canvas):
-        self.update_hit_box()
-        Point_Finder.Point_Finder.point(canvas, self.points[0][0], self.points[0][1])
-        Point_Finder.Point_Finder.point(canvas, self.points[1][0], self.points[1][1])
-        Point_Finder.Point_Finder.point(canvas, self.points[2][0], self.points[2][1])
-        Point_Finder.Point_Finder.point(canvas, self.points[3][0], self.points[3][1])
-
-    def update_hit_box(self):
-        self.points = ([self.x, self.y], [self.x + 32, self.y], [self.x + 32, self.y + 32], [self.x, self.y + 32])
-
-    def get_hit_point(self, point):
-        if point == 1:
-            return self.points[0][0], self.points[0][1]
-        elif point == 2:
-            return self.points[1][0], self.points[1][1]
-        elif point == 3:
-            return self.points[2][0], self.points[2][1]
-        elif point == 4:
-            return self.points[3][0], self.points[3][1]
