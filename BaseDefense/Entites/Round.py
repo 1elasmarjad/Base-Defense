@@ -32,14 +32,31 @@ class Round:
         if cls.rnd == 1:
             cls.generate_small_wooden_boats(2)
         elif cls.rnd == 2:
-            cls.generate_small_wooden_boats(6)
+            cls.generate_small_wooden_boats(5)
         elif cls.rnd == 3:
+            cls.generate_small_wooden_boats(7)
+            cls.generate_dinghy(1)
+        elif cls.rnd == 4:
+            cls.generate_small_wooden_boats(5)
+            cls.generate_dinghy(2)
+        elif cls.rnd == 5:
+            cls.generate_dinghy(5)
+        elif cls.rnd == 6:
             cls.generate_small_wooden_boats(8)
+            cls.generate_dinghy(6)
+        elif cls.rnd > 6:
+            cls.generate_small_wooden_boats(cls.rnd)
+            cls.generate_dinghy(cls.rnd - 2)
 
     @classmethod
     def generate_small_wooden_boats(cls, amnt):
         for i in range(amnt):
             EnemyList.EnemyList.add(Enemy.SmallWoodenBoat(cls.__random_x(), cls.__random_y()))
+
+    @classmethod
+    def generate_dinghy(cls, amnt):
+        for i in range(amnt):
+            EnemyList.EnemyList.add(Enemy.Dinghy(cls.__random_x(), cls.__random_y()))
 
     @classmethod
     def check_round(cls, enms, display):

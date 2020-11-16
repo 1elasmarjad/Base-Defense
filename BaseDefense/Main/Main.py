@@ -94,7 +94,7 @@ while running:
             pygame.quit()
             exit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[0]:  # not hovering over shop
+        if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[0]:
             x, y = pygame.mouse.get_pos()  # get mouse positions
             current_shot = pygame.time.get_ticks()
             time_dif = current_shot - last_shot
@@ -127,15 +127,12 @@ while running:
         player.heal_up()
 
     if not player.alive:
-        end_text = font.render(f"YOU GOT TO ROUND {Round.Round.rnd}!", False, (250, 20, 0))
+        end_text = font.render(f"Score: {Round.Round.rnd}", False, (250, 50, 0))
         end_text_rect = end_text.get_rect(center=(960, 510))
         display.blit(end_text, end_text_rect)
 
-        DamageText.DamageText.draw_all(display)
-
-        end_text2 = font.render(f"YOU LOST!", False, (250, 20, 0))
-        end_text_rect.y -= 300
-        end_text_rect.x += 450
+        end_text2 = font.render(f"You lost!", False, (250, 50, 0))
+        end_text_rect.y -= 200
         display.blit(end_text2, end_text_rect)
         game_end = True
 

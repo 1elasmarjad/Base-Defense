@@ -1,6 +1,6 @@
 TODO:
 
-- Add bullet projectiles; need to rethink logic 
+- Add bullet projectiles 
 - Create bullet drop off formula ✓
 - Add bounds to character movement ✓
 - Make scope larger ✓
@@ -11,15 +11,15 @@ TODO:
 
 - UI
    - Weapon and ammo display ✓
-   - Coins display
-   - Inventory section 
+   - Coins display ✓
+   - Inventory section
+   - Sounds 
+   - Graphics
 
 - GAMEPLAY
-   - Rounds ✓ still WIP.
+   - Rounds ✓ 
    - Enemies will damage player when they stop moving. ✓
    - Enemy Movement ✓
-
-- WHEN ADDING A WEAPON, add to PlayerUI and Weapons
 	
 
 

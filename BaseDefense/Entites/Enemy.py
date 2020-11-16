@@ -14,6 +14,7 @@ from Debug import Point_Finder
 import random
 from UserInterface import DamageText
 
+
 class Enemy:
 
     def __init__(self, x, y, name, health, attack_damage, speed, rng, rof):
@@ -150,5 +151,34 @@ class SmallWoodenBoat(Enemy, ThirtyBit):
 
             self.update_hit_box()
             pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
+        else:  # is dead:
+            self.kill_self()
+
+
+class Dinghy(Enemy, ThirtyBit):
+    pass
+    __HEALTH = 30
+    __ATTACK_DAMAGE = 4
+    __RNG = 70
+    __SPEED = 1
+    __RATE_OF_FIRE = 20
+    __NAME = "Small Wooden Boat"
+
+    def __init__(self, x, y):
+        super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
+                         self.__RNG, self.__RATE_OF_FIRE)
+        self.update_hit_box()
+
+    def draw(self, canvas, player, font):
+        if not self.dead:  # not dead:
+            if self.left_sided and self.x <= 728 - self.__RNG:
+                self.x += self.__SPEED
+            elif not self.left_sided and self.x >= 1160 + self.__RNG:
+                self.x -= self.__SPEED
+            else:  # in range:
+                self.shoot(player, font, canvas)
+
+            self.update_hit_box()
+            pygame.draw.rect(canvas, (0, 100, 100), (self.x, self.y, 32, 32))  # TODO
         else:  # is dead:
             self.kill_self()
