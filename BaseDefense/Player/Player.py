@@ -41,8 +41,8 @@ class Player:
         else:
             return False
 
-    def shoot(self, shoot_to_x, shoot_to_y, display, font):
-        self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, display, font)
+    def shoot(self, shoot_to_x, shoot_to_y, display, font, player):
+        self.inventory.current_weapon.fire(self.x, self.y, shoot_to_x, shoot_to_y, display, font, player)
 
     @property
     def x(self):
@@ -100,3 +100,8 @@ class Player:
         # HEALTH BAR:
         PlayerUI.UI.healthbar(canvas, 810, 880, 25, self.__health, self.DEFAULT_HEALTH, self.alive)
         PlayerUI.UI.weapon(canvas, self.inventory.current_weapon, self.alive)
+
+        if self.coins < 9999999999999:
+            PlayerUI.UI.coins(canvas, self.coins, self.alive)
+        else:
+            PlayerUI.UI.coins(canvas, 9999999999999, self.alive)

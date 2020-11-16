@@ -3,13 +3,19 @@ import os
 
 
 class UI:
-
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
     ammo_path = os.path.join(THIS_FOLDER, 'ammoUI.png')
     ammo_img = pygame.image.load(ammo_path)
 
+    coin_path = os.path.join(THIS_FOLDER, 'coinsUI.png')
+    coin_img = pygame.image.load(coin_path)
+
     watergun_path = os.path.join(THIS_FOLDER, 'watergunUI.png')
     watergun_img = pygame.image.load(watergun_path)
+
+    pistol_path = watergun_path = os.path.join(THIS_FOLDER, 'pistolUI.png')
+    pistol_img = pygame.image.load(pistol_path)
 
     sniper_path = os.path.join(THIS_FOLDER, 'sniperUI.png')
     sniper_img = pygame.image.load(sniper_path)
@@ -39,7 +45,17 @@ class UI:
                 weapon_rect = cls.watergun_img.get_rect(center=(x, y))
                 canvas.blit(cls.watergun_img, weapon_rect)
             elif weapon.name == "Pistol":
-                print("TODO")  # TODO
+                weapon_rect = cls.watergun_img.get_rect(center=(x, y))
+                canvas.blit(cls.pistol_img, weapon_rect)
             elif weapon.name == "Sniper":
                 weapon_rect = cls.sniper_img.get_rect(center=(x, y))
                 canvas.blit(cls.sniper_img, weapon_rect)
+
+    @classmethod
+    def coins(cls, canvas, coins, alive):
+        coin_font = pygame.font.Font(pygame.font.get_default_font(), 32)
+        if alive:
+            coin_text = coin_font.render(str(int(coins)), False, (0, 0, 0))
+            canvas.blit(coin_text, (890, 956))
+            coin_rect = cls.coin_img.get_rect(center=(870, 970))
+            canvas.blit(cls.coin_img, coin_rect)

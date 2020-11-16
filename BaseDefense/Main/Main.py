@@ -8,7 +8,7 @@ Version     :   v0.1
 from Weapons import Weapon, Projectile
 from Player import Player
 from Entites import Enemy, EnemyList, Round
-from UserInterface import Text
+from UserInterface import DamageText, CoinText
 import pygame
 from Debug import Point_Finder
 
@@ -94,15 +94,14 @@ while running:
             pygame.quit()
             exit()
 
-        if event.type == pygame.MOUSEBUTTONDOWN and not game_end:  # not hovering over shop
-
+        if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[0]:  # not hovering over shop
             x, y = pygame.mouse.get_pos()  # get mouse positions
             current_shot = pygame.time.get_ticks()
             time_dif = current_shot - last_shot
 
             if time_dif > player.inventory.current_weapon.rate_of_fire * 100:
                 last_shot = current_shot
-                player.shoot(x, y, display, fade_font)
+                player.shoot(x, y, display, fade_font, player)
 
         if event.type == pygame.KEYDOWN and not game_end:
             if event.key == pygame.K_r:
@@ -117,8 +116,9 @@ while running:
     EnemyList.EnemyList.draw_all(display, False, player, fade_font)  # draws all enemies
 
     check_essentials(display)  # checks essentials such as movement
+    CoinText.CoinText.draw_all(display)
 
-    Text.DamageText.draw_all(display, fade_font)  # displays all damage text on the screen
+    DamageText.DamageText.draw_all(display, fade_font)  # displays all damage text on the screen
     Projectile.ProjectileList.draw_all(display)  # display projectiles
 
     Round.Round.check_round(EnemyList.EnemyList.count_enemies(), display)  # checks if round is done or not
@@ -130,6 +130,8 @@ while running:
         end_text = font.render(f"YOU GOT TO ROUND {Round.Round.rnd}!", False, (250, 20, 0))
         end_text_rect = end_text.get_rect(center=(960, 510))
         display.blit(end_text, end_text_rect)
+
+        DamageText.DamageText.draw_all(display)
 
         end_text2 = font.render(f"YOU LOST!", False, (250, 20, 0))
         end_text_rect.y -= 300

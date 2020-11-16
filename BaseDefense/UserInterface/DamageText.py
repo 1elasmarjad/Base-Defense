@@ -1,10 +1,14 @@
+import pygame
+import random
+
+
 class DamageText:
     texts = []
 
     @classmethod
     # adds a text to list of fade
     def add(cls, font, display, string_text, x, y):
-        text_obj = TextFadeOut(font, display, string_text, x, y)
+        text_obj = TextFadeOut(font, display, string_text, x, y, 200, 30, 30)
         cls.texts.append(text_obj)
 
     @classmethod
@@ -23,13 +27,13 @@ class DamageText:
 class TextFadeOut:
     __FADE_AWAY_TIME = 2  # higher the faster, smaller the slower
 
-    def __init__(self, font, display, string_text, x, y):
+    def __init__(self, font, display, string_text, x, y, r, g, b):
         self.string_text = string_text
         self.font = font
         self.display = display
         self.x = x
         self.y = y
-        self.text = font.render(str(self.string_text), False, (200, 30, 30))
+        self.text = font.render(str(self.string_text), False, (r, g, b))
         self.alpha_val = 255
         self.done = False
 

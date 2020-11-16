@@ -10,9 +10,10 @@ ammo = the ammo a given weapon has
 
 import math
 import random
-from Entites import EnemyList
-from UserInterface import Text
+from Entites import EnemyList, Round
+from UserInterface import DamageText, CoinText
 from Weapons import Projectile
+
 
 
 class Weapon:
@@ -32,7 +33,7 @@ class Weapon:
     def reload(self):
         print("TODO")  # TODO
 
-    def fire(self, xFrom, yFrom, xTo, yTo, display, font):
+    def fire(self, xFrom, yFrom, xTo, yTo, display, font, player):
 
         if self.ammo >= 1:
 
@@ -44,12 +45,13 @@ class Weapon:
                 enemy.health -= do_damage  # lose health
 
                 self.__text_fade_out(display, font, random.randint(xTo - 45, xTo + 45), yTo - 15, do_damage)
+                player.coins += 1 * Round.Round.coin_multiplier
+                CoinText.CoinText.add(display, 1 * Round.Round.coin_multiplier)
 
             self.ammo -= 1
 
     def __text_fade_out(self, display, font, x, y, disp_print):
-
-        Text.DamageText.add(font, display, disp_print, x, y)
+        DamageText.DamageText.add(font, display, disp_print, x, y)
 
     def damage_done(self, xFrom, yFrom, xTo, yTo):
         if self.distance(xFrom, yFrom, xTo, yTo) >= self.weapon_range:  # out of range:

@@ -12,7 +12,7 @@ import pygame
 from Entites import EnemyList
 from Debug import Point_Finder
 import random
-from UserInterface import Text
+from UserInterface import DamageText
 
 class Enemy:
 
@@ -92,7 +92,7 @@ class Enemy:
             self.last_shot = pygame.time.get_ticks()
             do_dmg = self.__random_damage(self.attack_damage / 2, self.attack_damage)
             player.hurt(do_dmg)
-            Text.DamageText.add(font, display, str(do_dmg), player.x - 30, player.y - 20)
+            DamageText.DamageText.add(font, display, str(do_dmg), player.x - 30, player.y - 20)
 
     def __random_damage(self, least_dam, max_dam):
         return int(random.uniform(least_dam, max_dam))

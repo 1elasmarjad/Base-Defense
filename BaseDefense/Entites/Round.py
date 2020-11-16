@@ -7,6 +7,7 @@ import os
 class Round:
     rnd = 0
     round_ended = True
+    coin_multiplier = 0
     THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(THIS_FOLDER, 'advance.png')
     advance = pygame.image.load(path)
@@ -14,6 +15,7 @@ class Round:
     @classmethod
     def next_round(cls):
         cls.rnd += 1
+        cls.coin_multiplier += 1
 
     @property
     def round(cls):
