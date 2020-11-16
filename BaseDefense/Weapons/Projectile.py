@@ -43,13 +43,7 @@ class Projectile:
         self.g = g
         self.b = b
 
-
-
-
     def draw(self, canvas):
-
-
-
         print(self.x, self.y)
 
         # DRAW :

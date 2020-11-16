@@ -13,7 +13,8 @@ import random
 from Entites import EnemyList, Round
 from UserInterface import DamageText, CoinText
 from Weapons import Projectile
-
+import pygame
+import os
 
 
 class Weapon:
@@ -47,6 +48,11 @@ class Weapon:
                 self.__text_fade_out(display, font, random.randint(xTo - 45, xTo + 45), yTo - 15, do_damage)
                 player.coins += 1 * Round.Round.coin_multiplier
                 CoinText.CoinText.add(display, 1 * Round.Round.coin_multiplier)
+
+            THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+            sound_path = os.path.join(THIS_FOLDER, 'laser.wav')
+            shot_sound = pygame.mixer.Sound(sound_path)
+            shot_sound.play()
 
             self.ammo -= 1
 
