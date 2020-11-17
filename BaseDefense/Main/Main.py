@@ -16,9 +16,12 @@ from Debug import Point_Finder
 DEFAULT_SCREEN_WIDTH = 1900
 DEFAULT_SCREEN_HEIGHT = 1000
 
+AMMO_PRICE = 250
+
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(200)
+TEST_WEAPON = Weapon.Sniper(200)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -82,6 +85,7 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give water gun as default weapon
+player.inventory.add_to_inventory(TEST_WEAPON)
 
 while running:
     # ---------------------INIT--------------------
@@ -110,6 +114,11 @@ while running:
             if event.key == pygame.K_SPACE and Round.Round.round_ended:
                 Round.Round.next_round()
                 Round.Round.start_round()
+            if event.key == pygame.K_z and not game_end:
+                if player.coins >= AMMO_PRICE and player.inventory.current_weapon.ammo != player.inventory.current_weapon.ammo_cap:
+                    player.inventory.current_weapon.ammo = player.inventory.current_weapon.ammo_cap
+                    player.remove_coins(AMMO_PRICE)
+                    CoinText.CoinText.add_less(display, AMMO_PRICE)
 
     # ---------------------INIT--------------------
 
