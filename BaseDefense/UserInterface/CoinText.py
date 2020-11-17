@@ -13,6 +13,12 @@ class CoinText:
         cls.coin_texts.append(text_obj)
 
     @classmethod
+    def add_less(cls, display, coins):
+        cls.font = pygame.font.Font(pygame.font.get_default_font(), 28)
+        text_obj = CoinFadeOut(cls.font, display, str(coins), cls.__random_x(), cls.__random_y(), False)
+        cls.coin_texts.append(text_obj)
+
+    @classmethod
     def __random_x(cls):
         return random.randint(860, 920)
 

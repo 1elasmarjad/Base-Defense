@@ -72,7 +72,7 @@ class Player:
         self.__coins += added
 
     def remove_coins(self, removed):
-        self.__coins = removed
+        self.__coins -= removed
 
     @property
     def alive(self):

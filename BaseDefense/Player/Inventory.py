@@ -1,4 +1,6 @@
 from Weapons import Weapon
+import pygame
+import os
 
 
 class Inventory:
@@ -9,6 +11,7 @@ class Inventory:
         self.inventory_cap = inventory_cap  # int
         self.inv = []
         self.hovering_index = 0  # hovering over index 0
+        self.open = False
 
     def next_weapon(self):
         if self.hovering_index + 1 < len(self.inv):
@@ -68,3 +71,23 @@ class Inventory:
         for x in self.inv:
             counter += 1
         return counter
+
+    def open_inventory(self):
+        self.open = True
+
+    def close_inventory(self):
+        self.open = False
+
+    def has(self, weapon_name):
+        for i in range(len(self.inv)):
+            if self.inv[i].name == weapon_name:
+                return True
+        return False
+
+    def draw(self, display):
+        if self.open:
+            # THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+            # inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
+            # inv_img = pygame.image.load(inv_path)
+            # display.blit(inv_img, (100,100))
+            print("TODO")  # todo

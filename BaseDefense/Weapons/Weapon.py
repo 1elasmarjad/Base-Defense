@@ -90,6 +90,9 @@ class Weapon:
     def rate_of_fire(self):
         return self.rate_of_fire
 
+    def name(self):
+        return self.name()
+
     def __str__(self):
         return f"{self.name}"
 
