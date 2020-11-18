@@ -16,12 +16,12 @@ from Debug import Point_Finder
 DEFAULT_SCREEN_WIDTH = 1900
 DEFAULT_SCREEN_HEIGHT = 1000
 
-AMMO_PRICE = 250
+BULLET_PRICE = 1.5
 
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(200)
-TEST_WEAPON = Weapon.Sniper(200)
+TEST_WEAPON = Weapon.Sniper(500)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -85,7 +85,6 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give water gun as default weapon
-player.inventory.add_to_inventory(TEST_WEAPON)
 
 while running:
     # ---------------------INIT--------------------
@@ -115,10 +114,25 @@ while running:
                 Round.Round.next_round()
                 Round.Round.start_round()
             if event.key == pygame.K_z and not game_end:
-                if player.coins >= AMMO_PRICE and player.inventory.current_weapon.ammo != player.inventory.current_weapon.ammo_cap:
+                BULLET_PRICE = 2
+                bullets_needed = player.inventory.current_weapon.ammo_cap - player.inventory.current_weapon.ammo
+                ammo_price = bullets_needed * BULLET_PRICE
+
+                if player.coins >= ammo_price and player.inventory.current_weapon.ammo != player.inventory.current_weapon.ammo_cap:
                     player.inventory.current_weapon.ammo = player.inventory.current_weapon.ammo_cap
-                    player.remove_coins(AMMO_PRICE)
-                    CoinText.CoinText.add_less(display, AMMO_PRICE)
+                    player.remove_coins(ammo_price)
+                    CoinText.CoinText.add_less(display, ammo_price)
+
+                elif player.coins < ammo_price and player.inventory.current_weapon.ammo != player.inventory.current_weapon.ammo_cap:
+                    temp_coins = player.coins
+                    needed = 0
+                    while temp_coins >= BULLET_PRICE:
+                        needed += 1
+                        temp_coins -= BULLET_PRICE
+
+                    ammo_price = needed * BULLET_PRICE
+                    player.inventory.current_weapon.ammo += needed
+                    player.remove_coins(ammo_price)
 
     # ---------------------INIT--------------------
 
