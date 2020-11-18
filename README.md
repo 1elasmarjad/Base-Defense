@@ -9,7 +9,7 @@
 
 ### **DESCRPTION**
 
-* Base Defense is a game created using Pygame (Python).
+* Base Defense is a personal project/game created using Pygame (Python).
 * The goal is to reach a high score of rounds.
   * Do this by killing off unwanted enemies attempting to kill you and destroy your base.
 
@@ -24,6 +24,7 @@
 * 'R' to switch weapons
 * 'E' to open your inventory (WORK IN PROGRESS)
 * 'Q' to open the shop (WORK IN PROGRESS)
+* 'Z' to refill the ammo of your current weapon
 * 'SPACE' to advance to the next round
 
 ---
@@ -47,6 +48,12 @@
   * **RATE OF FIRE:** slow
   * **AMMO CAPACITY:** small
 
+#### Laser Gun:
+  * **DAMAGE:** medium
+  * **RANGE:** medium
+  * **RATE OF FIRE:** fast
+  * **AMMO CAPACITY:** medium-small
+  
 ---
 
 ### **ENEMIES**

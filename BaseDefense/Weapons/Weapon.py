@@ -142,7 +142,7 @@ class LaserGun(Weapon):
     __DAMAGE = 34
     __RANGE_OF_FIRE = 700
     __RATE_OF_FIRE = 1
-    __AMMO_CAP = 170
+    __AMMO_CAP = 150
 
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
