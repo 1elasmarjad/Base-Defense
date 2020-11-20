@@ -2,7 +2,7 @@
 ENEMIES
 
 health: amount of health a given entity has before it dies.
-rng: the range/ how far a entity can be to deal damage. The higher the larger the range, the lower the smalelr the range.
+rng: the range/ how far a entity can be to deal damage.
 damage: the damage an entity will generally do when attacking.
 speed: the speed/ how fast the entity moves.
 
@@ -158,10 +158,10 @@ class SmallWoodenBoat(Enemy, ThirtyBit):
 class Dinghy(Enemy, ThirtyBit):
     pass
     __HEALTH = 30
-    __ATTACK_DAMAGE = 4
+    __ATTACK_DAMAGE = 2
     __RNG = 70
     __SPEED = 1
-    __RATE_OF_FIRE = 20
+    __RATE_OF_FIRE = 10
     __NAME = "Small Wooden Boat"
 
     def __init__(self, x, y):
@@ -180,5 +180,34 @@ class Dinghy(Enemy, ThirtyBit):
 
             self.update_hit_box()
             pygame.draw.rect(canvas, (0, 100, 100), (self.x, self.y, 32, 32))  # TODO
+        else:  # is dead:
+            self.kill_self()
+
+
+class Warship(Enemy, ThirtyBit):
+    pass
+    __HEALTH = 300
+    __ATTACK_DAMAGE = 50
+    __RNG = 200
+    __SPEED = 0.15
+    __RATE_OF_FIRE = 200
+    __NAME = "Warship"
+
+    def __init__(self, x, y):
+        super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
+                         self.__RNG, self.__RATE_OF_FIRE)
+        self.update_hit_box()
+
+    def draw(self, canvas, player, font):
+        if not self.dead:  # not dead:
+            if self.left_sided and self.x <= 728 - self.__RNG:
+                self.x += self.__SPEED
+            elif not self.left_sided and self.x >= 1160 + self.__RNG:
+                self.x -= self.__SPEED
+            else:  # in range:
+                self.shoot(player, font, canvas)
+
+            self.update_hit_box()
+            pygame.draw.rect(canvas, (255, 255, 255), (self.x, self.y, 32, 32))  # TODO
         else:  # is dead:
             self.kill_self()

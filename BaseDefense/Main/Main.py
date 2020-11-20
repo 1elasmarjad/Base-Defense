@@ -21,7 +21,7 @@ BULLET_PRICE = 1.5
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(200)
-TEST_WEAPON = Weapon.Sniper(500)
+TEST_WEAPON = Weapon.Test(500)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -85,6 +85,7 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give water gun as default weapon
+player.inventory.add_to_inventory(TEST_WEAPON)
 
 while running:
     # ---------------------INIT--------------------

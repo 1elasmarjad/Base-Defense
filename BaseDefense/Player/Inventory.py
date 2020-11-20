@@ -86,8 +86,8 @@ class Inventory:
 
     def draw(self, display):
         if self.open:
-            # THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-            # inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
-            # inv_img = pygame.image.load(inv_path)
-            # display.blit(inv_img, (100,100))
+            THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+            inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
+            inv_img = pygame.image.load(inv_path)
+            display.blit(inv_img, (100,100))
             print("TODO")  # todo

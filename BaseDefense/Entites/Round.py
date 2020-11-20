@@ -47,6 +47,8 @@ class Round:
         elif cls.rnd > 6:
             cls.generate_small_wooden_boats(cls.rnd)
             cls.generate_dinghy(cls.rnd - 2)
+            if cls.rnd >= 9:
+                cls.generate_warship(1)
 
     @classmethod
     def generate_small_wooden_boats(cls, amnt):
@@ -57,6 +59,11 @@ class Round:
     def generate_dinghy(cls, amnt):
         for i in range(amnt):
             EnemyList.EnemyList.add(Enemy.Dinghy(cls.__random_x(), cls.__random_y()))
+
+    @classmethod
+    def generate_warship(cls, amnt):
+        for i in range(amnt):
+            EnemyList.EnemyList.add(Enemy.Warship(cls.__random_x(), cls.__random_y()))
 
     @classmethod
     def check_round(cls, enms, display):

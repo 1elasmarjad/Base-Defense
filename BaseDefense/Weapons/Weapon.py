@@ -147,3 +147,16 @@ class LaserGun(Weapon):
     def __init__(self, ammo_given):
         super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
                          self.__AMMO_CAP, self.__RANGE_OF_FIRE, ammo_given)
+
+
+class Test(Weapon):
+    pass
+    __NAME = "Test"
+    __DAMAGE = 130
+    __RANGE_OF_FIRE = 1500
+    __RATE_OF_FIRE = 0.1
+    __AMMO_CAP = 900
+
+    def __init__(self, ammo_given):
+        super().__init__(self.__NAME, self.__DAMAGE, self.__RATE_OF_FIRE,
+                         self.__AMMO_CAP, self.__RANGE_OF_FIRE, ammo_given)
