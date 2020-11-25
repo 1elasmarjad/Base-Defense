@@ -12,13 +12,13 @@ from UserInterface import DamageText, CoinText
 import pygame
 from Debug import Point_Finder
 
-def main():
 
+def main():
     # CONSTANTS
     DEFAULT_SCREEN_WIDTH = 1900
     DEFAULT_SCREEN_HEIGHT = 1000
 
-    BULLET_PRICE = 1.5
+    BULLET_PRICE = 2
 
     OCEAN_BLUE = (73, 136, 248)
 
@@ -50,12 +50,10 @@ def main():
         scope = pygame.image.load('scope.png')
         display.blit(scope, (x, y))  # displays scope
 
-
     def check_essentials(display):
         check_movement()
         player.draw(display)
         cursor_app(display)
-
 
     def check_movement():
         if not game_end:
@@ -74,7 +72,6 @@ def main():
 
             if keys[pygame.K_LEFT] or keys[pygame.K_a] and player.x >= 0 and player.x > 760:
                 player.move_left(clock.tick())
-
 
     """
     ----------------------------------
@@ -114,7 +111,6 @@ def main():
                     Round.Round.next_round()
                     Round.Round.start_round()
                 if event.key == pygame.K_z and not game_end:
-                    BULLET_PRICE = 2
                     bullets_needed = player.inventory.current_weapon.ammo_cap - player.inventory.current_weapon.ammo
                     ammo_price = bullets_needed * BULLET_PRICE
 
@@ -172,3 +168,5 @@ def main():
         clock.tick(FRAME_RATE)
         # ---------------------UPDATE------------------
 
+
+main()
