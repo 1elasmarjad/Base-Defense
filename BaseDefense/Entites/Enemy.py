@@ -13,11 +13,13 @@ from Entites import EnemyList
 from Debug import Point_Finder
 import random
 from UserInterface import DamageText
+import os
 
 
 class Enemy:
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
-    def __init__(self, x, y, name, health, attack_damage, speed, rng, rof):
+    def __init__(self, x, y, name, health, attack_damage, speed, rng, rof, img):
         self.x = x
         self.y = y
         self.name = name
@@ -28,6 +30,7 @@ class Enemy:
         self.rate_of_fire = rof
         EnemyList.EnemyList.add(self)
         self.last_shot = pygame.time.get_ticks()
+        self.img = img
 
         if self.x > 1128:
             self.left_sided = False
@@ -98,6 +101,25 @@ class Enemy:
     def __random_damage(self, least_dam, max_dam):
         return int(random.uniform(least_dam, max_dam))
 
+    def draw(self, canvas, player, font):
+            if not self.dead:  # not dead:
+                if self.left_sided and self.x <= 728 - self.rng:
+                    self.x += self.speed
+                elif not self.left_sided and self.x >= 1160 + self.rng:
+                    self.x -= self.speed
+                else:  # in range:
+                    self.shoot(player, font, canvas)
+
+                self.update_hit_box()
+
+                if self.left_sided:
+                    rotated = pygame.transform.flip(self.img, True, False)
+                    canvas.blit(rotated, (self.x, self.y))
+                else:
+                    canvas.blit(self.img, (self.x, self.y))
+            else:  # is dead:
+                self.kill_self()
+
     def __str__(self):
         return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y} | {self.health}"
 
@@ -135,24 +157,14 @@ class SmallWoodenBoat(Enemy, ThirtyBit):
     __RATE_OF_FIRE = 15
     __NAME = "Small Wooden Boat"
 
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(THIS_FOLDER, 'SmallWoodenBoat.png')
+    __IMG = pygame.image.load(path)
+
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
-                         self.__RNG, self.__RATE_OF_FIRE)
+                         self.__RNG, self.__RATE_OF_FIRE, self.__IMG)
         self.update_hit_box()
-
-    def draw(self, canvas, player, font):
-        if not self.dead:  # not dead:
-            if self.left_sided and self.x <= 728 - self.__RNG:
-                self.x += self.__SPEED
-            elif not self.left_sided and self.x >= 1160 + self.__RNG:
-                self.x -= self.__SPEED
-            else:  # in range:
-                self.shoot(player, font, canvas)
-
-            self.update_hit_box()
-            pygame.draw.rect(canvas, (0, 0, 255), (self.x, self.y, 32, 32))  # TODO
-        else:  # is dead:
-            self.kill_self()
 
 
 class Dinghy(Enemy, ThirtyBit):
@@ -162,26 +174,16 @@ class Dinghy(Enemy, ThirtyBit):
     __RNG = 70
     __SPEED = 1
     __RATE_OF_FIRE = 10
-    __NAME = "Small Wooden Boat"
+    __NAME = "Dinghy"
+
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(THIS_FOLDER, 'Dinghy.png')
+    __IMG = pygame.image.load(path)
 
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
-                         self.__RNG, self.__RATE_OF_FIRE)
+                         self.__RNG, self.__RATE_OF_FIRE, self.__IMG)
         self.update_hit_box()
-
-    def draw(self, canvas, player, font):
-        if not self.dead:  # not dead:
-            if self.left_sided and self.x <= 728 - self.__RNG:
-                self.x += self.__SPEED
-            elif not self.left_sided and self.x >= 1160 + self.__RNG:
-                self.x -= self.__SPEED
-            else:  # in range:
-                self.shoot(player, font, canvas)
-
-            self.update_hit_box()
-            pygame.draw.rect(canvas, (0, 100, 100), (self.x, self.y, 32, 32))  # TODO
-        else:  # is dead:
-            self.kill_self()
 
 
 class Warship(Enemy, ThirtyBit):
@@ -193,21 +195,11 @@ class Warship(Enemy, ThirtyBit):
     __RATE_OF_FIRE = 200
     __NAME = "Warship"
 
+    THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(THIS_FOLDER, 'Warship.png')
+    __IMG = pygame.image.load(path)
+
     def __init__(self, x, y):
         super().__init__(x, y, self.__NAME, self.__HEALTH, self.__ATTACK_DAMAGE, self.__SPEED,
-                         self.__RNG, self.__RATE_OF_FIRE)
+                         self.__RNG, self.__RATE_OF_FIRE, self.__IMG)
         self.update_hit_box()
-
-    def draw(self, canvas, player, font):
-        if not self.dead:  # not dead:
-            if self.left_sided and self.x <= 728 - self.__RNG:
-                self.x += self.__SPEED
-            elif not self.left_sided and self.x >= 1160 + self.__RNG:
-                self.x -= self.__SPEED
-            else:  # in range:
-                self.shoot(player, font, canvas)
-
-            self.update_hit_box()
-            pygame.draw.rect(canvas, (255, 255, 255), (self.x, self.y, 32, 32))  # TODO
-        else:  # is dead:
-            self.kill_self()

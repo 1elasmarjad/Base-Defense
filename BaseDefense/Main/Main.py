@@ -21,7 +21,6 @@ BULLET_PRICE = 1.5
 OCEAN_BLUE = (73, 136, 248)
 
 DEFAULT_WEAPON = Weapon.WaterGun(200)
-TEST_WEAPON = Weapon.Test(500)
 
 pygame.init()
 pygame.display.set_caption("Base Defense")
@@ -85,7 +84,6 @@ def check_movement():
 player = Player.Player(DEFAULT_SCREEN_WIDTH / 2, DEFAULT_SCREEN_HEIGHT / 2)
 
 player.inventory.add_to_inventory(DEFAULT_WEAPON)  # give water gun as default weapon
-player.inventory.add_to_inventory(TEST_WEAPON)
 
 while running:
     # ---------------------INIT--------------------
@@ -135,6 +133,12 @@ while running:
                     player.inventory.current_weapon.ammo += needed
                     player.remove_coins(ammo_price)
 
+            if event.key == pygame.K_e:
+                if player.inventory.open:
+                    player.inventory.open = False
+                else:
+                    player.inventory.open = True
+
     # ---------------------INIT--------------------
 
     EnemyList.EnemyList.draw_all(display, False, player, fade_font)  # draws all enemies
@@ -146,6 +150,7 @@ while running:
     Projectile.ProjectileList.draw_all(display)  # display projectiles
 
     Round.Round.check_round(EnemyList.EnemyList.count_enemies(), display)  # checks if round is done or not
+    player.inventory.draw(display)
 
     if Round.Round.round_ended:
         player.heal_up()
@@ -155,7 +160,7 @@ while running:
         end_text_rect = end_text.get_rect(center=(960, 510))
         display.blit(end_text, end_text_rect)
 
-        end_text2 = font.render(f"You lost!", False, (250, 50, 0))
+        end_text2 = font.render(f"You lost!", False, (250, 20, 0))
         end_text_rect.y -= 200
         display.blit(end_text2, end_text_rect)
         game_end = True
