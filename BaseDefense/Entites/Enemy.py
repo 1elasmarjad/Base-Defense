@@ -102,23 +102,23 @@ class Enemy:
         return int(random.uniform(least_dam, max_dam))
 
     def draw(self, canvas, player, font):
-            if not self.dead:  # not dead:
-                if self.left_sided and self.x <= 728 - self.rng:
-                    self.x += self.speed
-                elif not self.left_sided and self.x >= 1160 + self.rng:
-                    self.x -= self.speed
-                else:  # in range:
-                    self.shoot(player, font, canvas)
+        if not self.dead:  # not dead:
+            if self.left_sided and self.x <= 728 - self.rng:
+                self.x += self.speed
+            elif not self.left_sided and self.x >= 1160 + self.rng:
+                self.x -= self.speed
+            else:  # in range:
+                self.shoot(player, font, canvas)
 
-                self.update_hit_box()
+            self.update_hit_box()
 
-                if self.left_sided:
-                    rotated = pygame.transform.flip(self.img, True, False)
-                    canvas.blit(rotated, (self.x, self.y))
-                else:
-                    canvas.blit(self.img, (self.x, self.y))
-            else:  # is dead:
-                self.kill_self()
+            if self.left_sided:
+                rotated = pygame.transform.flip(self.img, True, False)
+                canvas.blit(rotated, (self.x, self.y))
+            else:
+                canvas.blit(self.img, (self.x, self.y))
+        else:  # is dead:
+            self.kill_self()
 
     def __str__(self):
         return f"{self.name} | {self.enemiesCounter} | {self.x},{self.y} | {self.health}"
