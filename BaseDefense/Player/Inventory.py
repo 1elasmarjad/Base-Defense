@@ -89,6 +89,5 @@ class Inventory:
             THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
             inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
             inv_img = pygame.image.load(inv_path)
-            inv_rect = inv_img.get_rect(center=(1920/2,200))
+            inv_rect = inv_img.get_rect(center=(1920 / 2, 200))
             display.blit(inv_img, inv_rect)
-            print("TODO")  # todo

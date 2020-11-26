@@ -29,7 +29,6 @@ def main():
     running = True
 
     display = pygame.display.set_mode((DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), pygame.SCALED and pygame.RESIZABLE)
-    pygame.mouse.set_visible(False)
     font = pygame.font.Font(pygame.font.get_default_font(), 150)
     fade_font = pygame.font.Font(pygame.font.get_default_font(), 28)
     clock = pygame.time.Clock()
@@ -47,16 +46,22 @@ def main():
 
     def cursor_app(display):
         x, y = pygame.mouse.get_pos()  # get mouse positions
-        scope = pygame.image.load('scope.png')
-        display.blit(scope, (x, y))  # displays scope
+
+        if not player.inventory.open:
+            pygame.mouse.set_visible(False)
+            scope = pygame.image.load('scope.png')
+            display.blit(scope, (x, y))  # displays scope
+        else:
+            pygame.mouse.set_visible(True)
 
     def check_essentials(display):
-        check_movement()
-        player.draw(display)
+        if not player.inventory.open:
+            check_movement()
         cursor_app(display)
+        player.draw(display)
 
     def check_movement():
-        if not game_end:
+        if not game_end and not player.inventory.open:
 
             keys = pygame.key.get_pressed()
 
@@ -94,7 +99,8 @@ def main():
                 pygame.quit()
                 exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[0]:
+            if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[
+                0] and not player.inventory.open:
                 x, y = pygame.mouse.get_pos()  # get mouse positions
                 current_shot = pygame.time.get_ticks()
                 time_dif = current_shot - last_shot
@@ -107,10 +113,10 @@ def main():
                 if event.key == pygame.K_r:
                     player.inventory.equip_next_weapon()
                     print(player.inventory.current_weapon)
-                if event.key == pygame.K_SPACE and Round.Round.round_ended:
+                if event.key == pygame.K_SPACE and Round.Round.round_ended and not player.inventory.open:
                     Round.Round.next_round()
                     Round.Round.start_round()
-                if event.key == pygame.K_z and not game_end:
+                if event.key == pygame.K_z and not game_end and not player.inventory.open:
                     bullets_needed = player.inventory.current_weapon.ammo_cap - player.inventory.current_weapon.ammo
                     ammo_price = bullets_needed * BULLET_PRICE
 
@@ -130,7 +136,7 @@ def main():
                         player.inventory.current_weapon.ammo += needed
                         player.remove_coins(ammo_price)
 
-                if event.key == pygame.K_e:
+                if event.key == pygame.K_e or event.type == pygame.KSCAN_ESCAPE:
                     if player.inventory.open:
                         player.inventory.open = False
                     else:
@@ -138,7 +144,8 @@ def main():
 
         # ---------------------INIT--------------------
 
-        EnemyList.EnemyList.draw_all(display, False, player, fade_font)  # draws all enemies
+        if not player.inventory.open:
+            EnemyList.EnemyList.draw_all(display, False, player, fade_font)  # draws all enemies
 
         check_essentials(display)  # checks essentials such as movement
         CoinText.CoinText.draw_all(display)

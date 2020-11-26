@@ -150,7 +150,7 @@ class ThirtyBit:
 
 class SmallWoodenBoat(Enemy, ThirtyBit):
     pass
-    __HEALTH = 40
+    __HEALTH = 35
     __ATTACK_DAMAGE = 10
     __RNG = 50
     __SPEED = 0.50
@@ -169,7 +169,7 @@ class SmallWoodenBoat(Enemy, ThirtyBit):
 
 class Dinghy(Enemy, ThirtyBit):
     pass
-    __HEALTH = 30
+    __HEALTH = 25
     __ATTACK_DAMAGE = 2
     __RNG = 70
     __SPEED = 1
@@ -188,7 +188,7 @@ class Dinghy(Enemy, ThirtyBit):
 
 class Warship(Enemy, ThirtyBit):
     pass
-    __HEALTH = 300
+    __HEALTH = 200
     __ATTACK_DAMAGE = 50
     __RNG = 200
     __SPEED = 0.15
