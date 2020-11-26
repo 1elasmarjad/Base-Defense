@@ -12,6 +12,7 @@ class Inventory:
         self.inv = []
         self.hovering_index = 0  # hovering over index 0
         self.open = False
+        self.UI_hovering = 0
 
     def next_weapon(self):
         if self.hovering_index + 1 < len(self.inv):
@@ -87,7 +88,17 @@ class Inventory:
     def draw(self, display):
         if self.open:
             THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-            inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
-            inv_img = pygame.image.load(inv_path)
+            if self.UI_hovering == 1:
+                inv_path = os.path.join(THIS_FOLDER, 'inventoryUI1.png')
+                inv_img = pygame.image.load(inv_path)
+            elif self.UI_hovering == 2:
+                inv_path = os.path.join(THIS_FOLDER, 'inventoryUI2.png')
+                inv_img = pygame.image.load(inv_path)
+            elif self.UI_hovering == 3:
+                inv_path = os.path.join(THIS_FOLDER, 'inventoryUI3.png')
+                inv_img = pygame.image.load(inv_path)
+            else:
+                inv_path = os.path.join(THIS_FOLDER, 'inventoryUI.png')
+                inv_img = pygame.image.load(inv_path)
             inv_rect = inv_img.get_rect(center=(1920 / 2, 200))
             display.blit(inv_img, inv_rect)

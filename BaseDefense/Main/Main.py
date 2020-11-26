@@ -46,13 +46,22 @@ def main():
 
     def cursor_app(display):
         x, y = pygame.mouse.get_pos()  # get mouse positions
-
         if not player.inventory.open:
             pygame.mouse.set_visible(False)
             scope = pygame.image.load('scope.png')
             display.blit(scope, (x, y))  # displays scope
         else:
             pygame.mouse.set_visible(True)
+            if 330 >= y >= 45 and 486 <= x <= 1432:
+                if x <= 771:
+                    # IN INV SLOT 1
+                    player.inventory.UI_hovering = 1
+                elif 815 <= x <= 1100:
+                    player.inventory.UI_hovering = 2
+                elif x >= 1147:
+                    player.inventory.UI_hovering = 3
+            else:
+                player.inventory.UI_hovering = 0
 
     def check_essentials(display):
         if not player.inventory.open:
@@ -101,6 +110,7 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN and not game_end and pygame.mouse.get_pressed()[
                 0] and not player.inventory.open:
+
                 x, y = pygame.mouse.get_pos()  # get mouse positions
                 current_shot = pygame.time.get_ticks()
                 time_dif = current_shot - last_shot
@@ -110,12 +120,18 @@ def main():
                     player.shoot(x, y, display, fade_font, player)
 
             if event.type == pygame.KEYDOWN and not game_end:
+
+                # KEY 'r':
                 if event.key == pygame.K_r:
                     player.inventory.equip_next_weapon()
                     print(player.inventory.current_weapon)
+
+                # KEY 'SPACE':
                 if event.key == pygame.K_SPACE and Round.Round.round_ended and not player.inventory.open:
                     Round.Round.next_round()
                     Round.Round.start_round()
+
+                # KEY 'z':
                 if event.key == pygame.K_z and not game_end and not player.inventory.open:
                     bullets_needed = player.inventory.current_weapon.ammo_cap - player.inventory.current_weapon.ammo
                     ammo_price = bullets_needed * BULLET_PRICE
@@ -136,6 +152,7 @@ def main():
                         player.inventory.current_weapon.ammo += needed
                         player.remove_coins(ammo_price)
 
+                # KEY 'e' or 'esc'
                 if event.key == pygame.K_e or event.type == pygame.KSCAN_ESCAPE:
                     if player.inventory.open:
                         player.inventory.open = False
