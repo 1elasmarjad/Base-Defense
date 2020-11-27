@@ -1,6 +1,7 @@
 from Weapons import Weapon
 import pygame
 import os
+from Player import PlayerUI
 
 
 class Inventory:
@@ -87,6 +88,7 @@ class Inventory:
 
     def draw(self, display):
         if self.open:
+            # DRAWS BASE OF INVENTORY:
             THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
             if self.UI_hovering == 1:
                 inv_path = os.path.join(THIS_FOLDER, 'inventoryUI1.png')
@@ -102,3 +104,10 @@ class Inventory:
                 inv_img = pygame.image.load(inv_path)
             inv_rect = inv_img.get_rect(center=(1920 / 2, 200))
             display.blit(inv_img, inv_rect)
+
+            # DRAWS WEAPONS IN INVENTORY
+            # for x in self.inv:
+            #     PlayerUI.UI.draw_inv_weapons(display, 960, 100, x.name)
+            # TODO
+
+
